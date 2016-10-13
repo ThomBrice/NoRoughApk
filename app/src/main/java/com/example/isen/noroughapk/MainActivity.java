@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Let's start", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -69,8 +69,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_color) {
             return true;
+        }else if (id == R.id.action_languages) {
+
+        }else if (id == R.id.action_size) {
+
+        }else if (id == R.id.action_connexion) {
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -82,13 +88,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_historique) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_statistique) {
 
-        } else if (id == R.id.nav_carte_score) {
+        } else if (id == R.id.nav_swing) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_amis) {
+
+        } else if (id == R.id.nav_mon_compte) {
+
+        } else if (id == R.id.nav_appareillage) {
 
         }
 

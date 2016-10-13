@@ -3,21 +3,29 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_historique"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="Historique" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_statistique"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="Statistique" />
         <item
-            android:id="@+id/nav_carte_score"
+            android:id="@+id/nav_swing"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="carte de score" />
+            android:title="Analyse swing" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_amis"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Amis" />
+        <item
+            android:id="@+id/nav_mon_compte"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Mon compte" />
+        <item
+            android:id="@+id/nav_appareillage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Appareillage" />
     </group>
 
 

@@ -2,8 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_color"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Couleurs"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_languages"
+        android:orderInCategory="100"
+        android:title="Langues"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_size"
+        android:orderInCategory="100"
+        android:title="Taille"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_connexion"
+        android:orderInCategory="100"
+        android:title="Connexion/Deconnexion"
+        app:showAsAction="never" />
+
 </menu>
