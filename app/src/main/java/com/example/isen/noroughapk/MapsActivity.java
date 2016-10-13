@@ -25,9 +25,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void onMapReady(GoogleMap map){
         map.addMarker(new MarkerOptions()
-        .position(new LatLng(0,0))
+        .position(new LatLng(50.657561, 3.129439)) //coordonnées de la citadelle
         .title("Marker"));
-        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
     }
 
 }
