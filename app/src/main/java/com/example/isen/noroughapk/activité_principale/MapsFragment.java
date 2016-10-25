@@ -1,4 +1,4 @@
-package com.example.isen.noroughapk;
+package com.example.isen.noroughapk.activité_principale;
 
 
 import android.os.Bundle;
@@ -7,14 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.isen.noroughapk.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ActivityFragment extends Fragment {
+public class MapsFragment extends Fragment {
 
 
-    public ActivityFragment() {
+    public MapsFragment() {
         // Required empty public constructor
     }
 
@@ -23,7 +24,7 @@ public class ActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_activity, container, false);
+        return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
 }

@@ -1,13 +1,19 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.isen.noroughapk.ActivityFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.isen.noroughapk.activité_principale.ActivityFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs_activité"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hello_activité" />
+        app:tabMode="fixed"
+        app:tabGravity="fill"/>
 
-</FrameLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_activité"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>
