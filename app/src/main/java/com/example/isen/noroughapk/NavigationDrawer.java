@@ -1,6 +1,5 @@
 package com.example.isen.noroughapk;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -12,10 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 import com.example.isen.noroughapk.activité_principale.ActivityFragment;
 
 public class NavigationDrawer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        ClickListenerFragment{
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     NavigationView navigationView;
@@ -37,13 +38,13 @@ public class NavigationDrawer extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_activite,0);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_start,0);
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_activite,0);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_start,0);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -67,7 +68,7 @@ public class NavigationDrawer extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_color) {
-            return true;
+
         }else if (id == R.id.action_languages) {
 
         }else if (id == R.id.action_size) {
@@ -85,10 +86,10 @@ public class NavigationDrawer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_activite) {
-            ActivityFragment activityFragment = new ActivityFragment();
+        if (id == R.id.nav_start) {
+            StartFragment startFragment = new StartFragment();
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_main, activityFragment)
+                    .replace(R.id.content_main, startFragment)
                     .commit();
         }else if (id == R.id.nav_historique) {
             HistoryFragment historyFragment = new HistoryFragment();
@@ -116,5 +117,20 @@ public class NavigationDrawer extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void ClickListener(String name) {
+        switch (name) {
+            case "play":
+                ActivityFragment activityFragment = new ActivityFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_main, activityFragment)
+                        .commit();
+                break;
+            default:
+                name = "null";
+
+        }
     }
 }
