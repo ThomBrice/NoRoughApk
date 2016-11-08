@@ -1,13 +1,123 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context="com.example.isen.noroughapk.activité_principale.ScoreFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:background="@color/colorPrimaryDark"
+    >
 
-    <TextView
-        android:text="carte de score à compléter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-</RelativeLayout>
+        android:id="@+id/carteTrou"
+        app:cardCornerRadius="10dp"
+
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+
+
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textTrou"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="16dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15dp"
+                android:text="Trou:"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/numeroTrou"
+                android:layout_toRightOf="@+id/textTrou"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15dp"
+                android:text="1"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textPar"
+                android:layout_below="@+id/textTrou"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15dp"
+                android:text="Par: " />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Par"
+                android:layout_below="@id/numeroTrou"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_toRightOf="@+id/textPar"
+                android:textSize="15dp"
+
+                android:text="4"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textScore"
+                android:layout_below="@+id/textPar"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15dp"
+                android:text="Score: " />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/score"
+                android:layout_below="@id/Par"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_toRightOf="@+id/textScore"
+                android:textSize="15dp"
+                android:text="0"
+                />
+
+            <android.support.design.widget.FloatingActionButton
+
+                android:id="@+id/nextHole"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|end"
+                app:srcCompat="@android:drawable/ic_menu_rotate"
+                app:backgroundTint="@android:color/holo_green_dark"
+                app:rippleColor="@android:color/white"
+                android:layout_marginEnd="15dp"
+                android:layout_alignTop="@+id/scorePlus"
+                android:layout_toStartOf="@+id/scorePlus"
+                android:clickable="true"/>
+
+            <android.support.design.widget.FloatingActionButton
+
+                android:id="@+id/scorePlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                app:srcCompat="@android:drawable/ic_input_add"
+                app:backgroundTint="@android:color/holo_green_dark"
+                app:rippleColor="@android:color/white"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

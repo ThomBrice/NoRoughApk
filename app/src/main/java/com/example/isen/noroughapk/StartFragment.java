@@ -29,7 +29,7 @@ public class StartFragment extends Fragment {
 
         listenerFragment=(NavigationDrawer) this.getActivity();
 
-        FloatingActionButton playButton = (android.support.design.widget.FloatingActionButton) view.findViewById(R.id.start_button);
+        FloatingActionButton playButton = (FloatingActionButton) view.findViewById(R.id.start_button);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

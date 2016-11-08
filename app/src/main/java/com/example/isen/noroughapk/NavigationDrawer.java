@@ -13,7 +13,6 @@ import android.view.MenuItem;
 
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 import com.example.isen.noroughapk.activité_principale.ActivityFragment;
-
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ClickListenerFragment{
@@ -32,7 +31,7 @@ public class NavigationDrawer extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -129,7 +128,7 @@ public class NavigationDrawer extends AppCompatActivity
                         .commit();
                 break;
             default:
-                name = "null";
+                break;
 
         }
     }
