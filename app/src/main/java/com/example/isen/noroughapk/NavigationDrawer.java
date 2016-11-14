@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
-import com.example.isen.noroughapk.activité_principale.ActivityFragment;
+import com.example.isen.noroughapk.fragment_partie_lancée.ActivityFragment;
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ClickListenerFragment{

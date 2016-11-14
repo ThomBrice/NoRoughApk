@@ -3,17 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.isen.noroughapk.activité_principale.ActivityFragment">
+    tools:context="com.example.isen.noroughapk.fragment_partie_lancée.ActivityFragment">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs_activité"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:tabMode="fixed"
         app:tabGravity="fill"/>
 
+    TODO rajouter des logos avec les textes
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_activité"
+        android:layout_below="@+id/tabs_activité"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

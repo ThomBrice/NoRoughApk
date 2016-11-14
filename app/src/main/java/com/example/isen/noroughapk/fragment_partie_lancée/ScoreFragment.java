@@ -1,4 +1,4 @@
-package com.example.isen.noroughapk.activité_principale;
+package com.example.isen.noroughapk.fragment_partie_lancée;
 
 
 import android.os.Bundle;

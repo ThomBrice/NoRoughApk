@@ -9,27 +9,27 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class StartFragment extends Fragment {
+
     private ClickListenerFragment listenerFragment;
-
-    public StartFragment() {
-        // Required empty public constructor
-    }
-
+    MapView mMapView;
+    private GoogleMap googleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_start, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_start, container, false);
 
         listenerFragment=(NavigationDrawer) this.getActivity();
 
-        FloatingActionButton playButton = (FloatingActionButton) view.findViewById(R.id.start_button);
+        FloatingActionButton playButton = (FloatingActionButton) rootView.findViewById(R.id.start_button);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,7 +37,34 @@ public class StartFragment extends Fragment {
             }
         });
 
-        return view;
+        mMapView = (MapView) rootView.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
+        mMapView.onResume();
+
+        return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
 }
