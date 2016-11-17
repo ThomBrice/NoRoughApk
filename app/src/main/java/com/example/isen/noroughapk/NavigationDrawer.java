@@ -13,9 +13,8 @@ import android.view.MenuItem;
 
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 import com.example.isen.noroughapk.activité_principale.ActivityFragment;
-public class NavigationDrawer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        ClickListenerFragment{
+
+public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ClickListenerFragment {
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     NavigationView navigationView;
@@ -37,13 +36,13 @@ public class NavigationDrawer extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_start,0);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_start, 0);
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_start,0);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_start, 0);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -68,11 +67,11 @@ public class NavigationDrawer extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_color) {
 
-        }else if (id == R.id.action_languages) {
+        } else if (id == R.id.action_languages) {
 
-        }else if (id == R.id.action_size) {
+        } else if (id == R.id.action_size) {
 
-        }else if (id == R.id.action_connexion) {
+        } else if (id == R.id.action_connexion) {
 
         }
 
@@ -90,7 +89,7 @@ public class NavigationDrawer extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.content_main, startFragment)
                     .commit();
-        }else if (id == R.id.nav_historique) {
+        } else if (id == R.id.nav_historique) {
             HistoryFragment historyFragment = new HistoryFragment();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_main, historyFragment)
@@ -98,7 +97,7 @@ public class NavigationDrawer extends AppCompatActivity
         } else if (id == R.id.nav_statistique) {
             StatisticFragment statisticFragment = new StatisticFragment();
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_main , statisticFragment)
+                    .replace(R.id.content_main, statisticFragment)
                     .commit();
         } else if (id == R.id.nav_swing) {
             AnalyseFragment analyseFragment = new AnalyseFragment();
@@ -119,7 +118,8 @@ public class NavigationDrawer extends AppCompatActivity
     }
 
     @Override
-    public void ClickListener(String name) {
+    public void ClickListener(String name ) {
+
         switch (name) {
             case "play":
                 ActivityFragment activityFragment = new ActivityFragment();
@@ -127,9 +127,46 @@ public class NavigationDrawer extends AppCompatActivity
                         .replace(R.id.content_main, activityFragment)
                         .commit();
                 break;
+            case "goToHistory":
+                HistoryFragment historyFragment = new HistoryFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_main, historyFragment)
+                        .commit();
+                break;
+            case "goToHistoryScoreFragment":
+
+                HistoryScoreFragment historyScoreFragment = new HistoryScoreFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("ID",1868940442);
+                historyScoreFragment.setArguments(bundle);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_main,historyScoreFragment)
+                        .commit();
+                break;
+
             default:
                 break;
 
+        }
+    }
+
+    @Override
+    public void ClickListener(String name, int id){
+        switch (name) {
+            case "goToHistoryScoreFragment":
+
+                HistoryScoreFragment historyScoreFragment = new HistoryScoreFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("ID",id);
+                historyScoreFragment.setArguments(bundle);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_main,historyScoreFragment)
+                        .commit();
+                break;
+            default:
+                break;
         }
     }
 }
