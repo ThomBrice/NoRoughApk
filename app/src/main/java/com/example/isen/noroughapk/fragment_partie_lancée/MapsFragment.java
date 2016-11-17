@@ -1,15 +1,11 @@
 package com.example.isen.noroughapk.fragment_partie_lancée;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,26 +14,25 @@ import android.widget.Toast;
 import com.example.isen.noroughapk.R;
 import com.example.isen.noroughapk.GPSTracker;
 
-import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import static android.R.attr.bitmap;
-import static android.R.attr.duration;
-
 
 public class MapsFragment extends Fragment {
 
-    MapView mMapView;
+    private MapView mMapView;
     private GoogleMap googleMap;
     private Location mLocation;
     private double latitude; // latitude
     private double longitude; // longitude
+    private GPSTracker gpsTracker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +41,12 @@ public class MapsFragment extends Fragment {
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
+
+        // enléve la toolbar (en bas à droite) qui permet de trouver un chemin jusqu'au marker
+
+        //googleMap.getUiSettings().setZoomControlsEnabled(true);
+
+        gpsTracker = new GPSTracker(getContext());
 
         mMapView.onResume();
 
@@ -56,43 +57,48 @@ public class MapsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-
         mMapView.getMapAsync(new OnMapReadyCallback() {
-            GPSTracker gpsTracker = new GPSTracker(getContext());
+
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
 
+                googleMap.getUiSettings().setMapToolbarEnabled(false); // disable help from Api maps when a marker's click appear
+
                 if (gpsTracker.canGetLocation()) {
-                    latitude = gpsTracker.getLatitude();
-                    longitude = gpsTracker.getLongitude();
+                    latitude = gpsTracker.getLatitude(); // loading my latitude
+                    longitude = gpsTracker.getLongitude(); // loading my longitude
 
-                    googleMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(latitude, longitude)));
+                    //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 17)); // zoom on my position
 
-                    Toast.makeText(getContext(), "Your Location is - \nLat: " + gpsTracker.getLatitude()
-                                    + "\nLong: " + gpsTracker.getLongitude()
-                            , Toast.LENGTH_LONG).show();
-                }else {
-                    gpsTracker.showSettingsAlert();
+                    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    googleMap.setMyLocationEnabled(true);
+
+                    Marker marker = googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(latitude,longitude))
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+
+                    gpsTracker.animateMarker(marker,new LatLng(1,3),false,googleMap);
+                } else {
+                    gpsTracker.showSettingsAlert();  // Alert if GPS is not enabled
                 }
             }
         });
-
-
     }
-
 
     @Override
     public void onPause() {
         super.onPause();
-        //locationManager.removeUpdates(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+        gpsTracker.stopUsingGPS();
     }
 
     @Override
