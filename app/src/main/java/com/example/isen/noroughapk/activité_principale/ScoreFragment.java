@@ -29,9 +29,14 @@ import io.realm.Realm;
 public class ScoreFragment extends Fragment {
     private Realm realm;
     private PartiesAdapter adapter;
-    String[] ParGolfSart = new String[]{"4", "3", "5", "4", "4", "4", "3", "4", "5", "4", "4", "3", "4", "4", "3", "4", "4", "5"};
     private ClickListenerFragment listenerFragment;
     Integer[] Score = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    Integer[] Handicap = new Integer[]{7, 3, 15, 11, 1, 9, 17, 13, 5, 8, 4, 16, 14, 2, 18, 10, 6, 12};
+    Integer[] ParGolfSart = new Integer[]{4, 3, 5, 4, 4, 4, 3, 4, 5, 4, 4, 3, 4, 4, 3, 4, 4, 5};
+    int handicap = 18;
+    Integer[] newScore = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    int lecteurHandicap = 1;
+    int scoreTotal = 0;
 
     public ScoreFragment() {
         // Required empty public constructor
@@ -75,23 +80,28 @@ public class ScoreFragment extends Fragment {
         TextView scoreTextView = (TextView) view.findViewById(R.id.score);
         TextView parTextView = (TextView) view.findViewById(R.id.Par);
 
+
         int trouNumber = (Integer.parseInt(trouTextView.getText().toString()));
-        int parNumber = (Integer.parseInt(ParGolfSart[trouNumber - 1]));
-        if (trouNumber < 18) {
+        if (trouNumber < 19) {
             int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
             Score[trouNumber - 1] = scoreNumber;
-            trouTextView.setText("" + (trouNumber + 1));
-            scoreTextView.setText("0");
-            parTextView.setText("" + parNumber);
-
-
-        } else {
             if (trouNumber == 18) {
                 setRealmData(Score);
                 listenerFragment.ClickListener("goToHistory");
+
+
+
+            }else {
+                int parNumber = (ParGolfSart[trouNumber]);
+
+                trouTextView.setText("" + (trouNumber + 1));
+                scoreTextView.setText("0");
+                parTextView.setText("" + parNumber);
             }
 
         }
+
+
     }
 
     public void changeScorePlus(View view) {
@@ -99,6 +109,7 @@ public class ScoreFragment extends Fragment {
         TextView scoreTextView = (TextView) view.findViewById(R.id.score);
 
         int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
+
         scoreTextView.setText("" + (scoreNumber + 1));
 
     }
@@ -110,6 +121,8 @@ public class ScoreFragment extends Fragment {
         long id = 1 + System.currentTimeMillis();
         ArrayList<Partie> parties = new ArrayList<>();
         Partie partie = new Partie();
+        setNewScore();
+
 
         partie.setId((int) (id));
         partie.setDatePartie("" + date);
@@ -131,7 +144,7 @@ public class ScoreFragment extends Fragment {
         partie.setScore16(Carte[15]);
         partie.setScore17(Carte[16]);
         partie.setScore18(Carte[17]);
-
+        partie.setScore("" + scoreTotal);
         partie.setHandicap("10");
         partie.setTrou("10");
         parties.add(partie);
@@ -148,4 +161,52 @@ public class ScoreFragment extends Fragment {
 
     }
 
+    public void setNewScore() {
+        while (handicap != 0) {
+
+            if (handicap <= 18) {
+                for (int i = 0; i < 18; i++) {
+                    newScore[i] = Score[i] - 1;
+                }
+                handicap = handicap - 18;
+            } else {
+                for (int j = 0; j < handicap; j++) {
+                    for (int i = 0; i < 18; i++) {
+                        if (lecteurHandicap == Handicap[i]) {
+                            newScore[i] = Score[i] - 1;
+                            lecteurHandicap++;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < 18; i++) {
+            int diff = newScore[i] - ParGolfSart[i];
+            switch (diff) {
+                case 0:
+                    scoreTotal += 2;
+                    break;
+                case 1:
+                    scoreTotal += 1;
+                    break;
+                case -1:
+                    scoreTotal += 3;
+                    break;
+                case -2:
+                    scoreTotal += 4;
+                    break;
+                case -3:
+                    scoreTotal += 5;
+                    break;
+                case -4:
+                    scoreTotal += 6;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
+
+

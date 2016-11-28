@@ -56,6 +56,7 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
 
         // set the title and the snippet
         holder.textDatePartie.setText(partie.getDatePartie());
+        holder.textScore.setText(partie.getScore());
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,12 +125,14 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         public CardView card;
         public TextView textDatePartie;
+        public TextView textScore;
 
         public CardViewHolder(View itemView) {
             // standard view holder pattern with Butterknife view injection
             super(itemView);
             card = (CardView) itemView.findViewById(R.id.card_parties);
             textDatePartie = (TextView) itemView.findViewById(R.id.date_partie);
+            textScore =(TextView) itemView.findViewById(R.id.scoreTotal);
 
 
         }

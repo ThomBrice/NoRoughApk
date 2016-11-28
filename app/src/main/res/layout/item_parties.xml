@@ -40,6 +40,20 @@
                 android:textSize="@dimen/text_size_large"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/textScoreTotal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/date_partie"
+                android:text="Score:"
+
+                />
+            <TextView
+                android:id="@+id/scoreTotal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
 
         </LinearLayout>
     </LinearLayout>
