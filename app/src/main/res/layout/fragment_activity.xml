@@ -1,19 +1,63 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.isen.noroughapk.activité_principale.ActivityFragment">
+    tools:context="com.example.isen.noroughapk.fragment_partie_lancée.ActivityFragment"
+    android:weightSum="100">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs_activité"
+        android:layout_weight="7"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:tabMode="fixed"
         app:tabGravity="fill"/>
 
+    TODO rajouter des logos avec les textes
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_activité"
+        android:layout_weight="92"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_below="@+id/tabs_activité"/>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1"
+        android:layout_below="@+id/viewpager_activité"
+        android:background="@drawable/gradient">
+        <TextView
+            android:id="@+id/start_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="test"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/mid_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="test2"
+            android:layout_margin="2dp"
+            android:layout_gravity="center_horizontal|center_vertical"/>
+        <TextView
+            android:id="@+id/end_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:text="test3"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"/>
+    </GridLayout>
+
+
+</LinearLayout>
