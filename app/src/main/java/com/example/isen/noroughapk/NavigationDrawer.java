@@ -42,13 +42,8 @@ public class NavigationDrawer extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView.getMenu().getItem(0).setChecked(true);
         navigationView.getMenu().performIdentifierAction(R.id.nav_start,0);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override

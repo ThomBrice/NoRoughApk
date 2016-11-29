@@ -18,6 +18,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         app:backgroundTint="@color/colorAccent"
-        app:rippleColor="@color/ripples" />
+        app:rippleColor="@color/ripples"
+        android:src="@drawable/golf_player"/>
 
 </RelativeLayout>

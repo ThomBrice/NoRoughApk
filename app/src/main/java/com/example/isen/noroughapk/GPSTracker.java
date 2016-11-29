@@ -17,11 +17,9 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Toast;
@@ -31,10 +29,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import static java.security.AccessController.getContext;
-
 
 /**
  * Created by Thomas on 14/11/2016.
@@ -49,6 +43,8 @@ public class GPSTracker extends Service implements LocationListener {
     //flag for network status
     boolean isNetworkEnabled = false;
 
+    private GoogleMap googleMap;
+
     boolean canGetLocation = false;
 
     Location location; // location
@@ -59,13 +55,14 @@ public class GPSTracker extends Service implements LocationListener {
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // meters
 
     //The minimum time between updates in millisecondes
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1000 * 60 *min
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1000 * 60 *min  TODO mettre une valeur appropriée à la fin des tests
 
     //Declaring a Location Manager
     protected LocationManager locationManager;
 
-    public GPSTracker(Context context) {
+    public GPSTracker(Context context, GoogleMap googleMap) {
         this.mContext = context;
+        this.googleMap = googleMap;
         getLocation();
     }
 
@@ -100,8 +97,6 @@ public class GPSTracker extends Service implements LocationListener {
                             MIN_TIME_BW_UPDATES,
                             MIN_DISTANCE_CHANGE_FOR_UPDATES,
                             this);
-                    Toast.makeText(mContext, "Network update"
-                            , Toast.LENGTH_SHORT).show();
                     if (locationManager != null) {
                         location = locationManager
                                 .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -119,8 +114,6 @@ public class GPSTracker extends Service implements LocationListener {
                                 MIN_TIME_BW_UPDATES,
                                 MIN_DISTANCE_CHANGE_FOR_UPDATES,
                                 this);
-                        Toast.makeText(mContext, "GPS update"
-                                , Toast.LENGTH_SHORT).show();
                         if (locationManager != null) {
                             location = locationManager
                                     .getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -180,6 +173,10 @@ public class GPSTracker extends Service implements LocationListener {
         return longitude;
     }
 
+    public LocationManager getLocationManager() {
+        return locationManager;
+    }
+
     /**
      * Function to check GPS/wifi enabled
      * @return boolean
@@ -193,6 +190,7 @@ public class GPSTracker extends Service implements LocationListener {
      * On pressing Settings button will lauch Settings Options
      * */
     public void showSettingsAlert(){
+
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
         // Setting Dialog Title
@@ -230,6 +228,7 @@ public class GPSTracker extends Service implements LocationListener {
     public void onLocationChanged(Location location) {
         this.location = location;
         getLocation();
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 17)); // zoom and move on my position
     }
 
     @Override

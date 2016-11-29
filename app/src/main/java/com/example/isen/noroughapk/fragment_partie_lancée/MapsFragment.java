@@ -3,6 +3,7 @@ package com.example.isen.noroughapk.fragment_partie_lancée;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * Created by Thomas B on 02/11/2016.
+ */
+
 public class MapsFragment extends Fragment {
 
     private MapView mMapView;
@@ -42,12 +47,6 @@ public class MapsFragment extends Fragment {
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
-        // enléve la toolbar (en bas à droite) qui permet de trouver un chemin jusqu'au marker
-
-        //googleMap.getUiSettings().setZoomControlsEnabled(true);
-
-        gpsTracker = new GPSTracker(getContext());
-
         mMapView.onResume();
 
         return rootView;
@@ -62,20 +61,19 @@ public class MapsFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
+                gpsTracker = new GPSTracker(getContext(),googleMap);
+
 
                 googleMap.getUiSettings().setMapToolbarEnabled(false); // disable help from Api maps when a marker's click appear
+                googleMap.getUiSettings().setZoomControlsEnabled(true);
 
                 if (gpsTracker.canGetLocation()) {
-                    latitude = gpsTracker.getLatitude(); // loading my latitude
-                    longitude = gpsTracker.getLongitude(); // loading my longitude
-
-                    //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 17)); // zoom on my position
-
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                             ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         return;
                     }
                     googleMap.setMyLocationEnabled(true);
+                    googleMap.getUiSettings().setCompassEnabled(false); // disable compass
 
                     Marker marker = googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(latitude,longitude))
@@ -98,7 +96,6 @@ public class MapsFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
-        gpsTracker.stopUsingGPS();
     }
 
     @Override
@@ -106,5 +103,4 @@ public class MapsFragment extends Fragment {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
-
 }
