@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.isen.noroughapk.R;
+import com.example.isen.noroughapk.json_helper.JsonReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class ActivityFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private JsonReader jsonReader;
 
     public ActivityFragment() {
     }
@@ -39,6 +41,9 @@ public class ActivityFragment extends Fragment {
 
         tabLayout = (TabLayout) result.findViewById(R.id.tabs_activité);
         tabLayout.setupWithViewPager(viewPager); // Assigns the ViewPager to TabLayout
+
+        jsonReader = new JsonReader(getContext());
+        jsonReader.execute();
 
         return result;
     }

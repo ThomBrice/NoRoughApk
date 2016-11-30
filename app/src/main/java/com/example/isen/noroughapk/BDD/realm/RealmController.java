@@ -6,7 +6,7 @@ import android.app.Application;
 
 import com.example.isen.noroughapk.HistoryFragment;
 import com.example.isen.noroughapk.HistoryScoreFragment;
-import com.example.isen.noroughapk.activité_principale.ScoreFragment;
+import com.example.isen.noroughapk.fragment_partie_lancée.ScoreFragment;
 import com.example.isen.noroughapk.BDD.model.Partie;
 
 import io.realm.Realm;

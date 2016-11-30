@@ -17,8 +17,6 @@ public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ClickListenerFragment{
 
-public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ClickListenerFragment {
-
     FragmentManager fragmentManager = getSupportFragmentManager();
     NavigationView navigationView;
 
