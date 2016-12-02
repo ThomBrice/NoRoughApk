@@ -1,6 +1,7 @@
 package com.example.isen.noroughapk.fragment_partie_lancée;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -10,14 +11,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.isen.noroughapk.Interfaces.LocationChangeCalcul;
+import com.example.isen.noroughapk.NavigationDrawer;
 import com.example.isen.noroughapk.R;
 import com.example.isen.noroughapk.GPSTracker;
 
+import com.example.isen.noroughapk.StartFragment;
+import com.example.isen.noroughapk.json_helper.JsonReader;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
@@ -34,10 +42,11 @@ public class MapsFragment extends Fragment {
 
     private MapView mMapView;
     private GoogleMap googleMap;
-    private Location mLocation;
-    private double latitude; // latitude
-    private double longitude; // longitude
     private GPSTracker gpsTracker;
+    private LocationChangeCalcul locationChangeCalcul;
+
+    public MapsFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +55,8 @@ public class MapsFragment extends Fragment {
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
+
+        locationChangeCalcul = (NavigationDrawer) this.getActivity();
 
         mMapView.onResume();
 
@@ -61,8 +72,7 @@ public class MapsFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
-                gpsTracker = new GPSTracker(getContext(),googleMap);
-
+                gpsTracker = new GPSTracker(getContext(),googleMap,locationChangeCalcul);
 
                 googleMap.getUiSettings().setMapToolbarEnabled(false); // disable help from Api maps when a marker's click appear
                 googleMap.getUiSettings().setZoomControlsEnabled(true);
@@ -75,11 +85,13 @@ public class MapsFragment extends Fragment {
                     googleMap.setMyLocationEnabled(true);
                     googleMap.getUiSettings().setCompassEnabled(false); // disable compass
 
+                    /*
                     Marker marker = googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(latitude,longitude))
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
                     gpsTracker.animateMarker(marker,new LatLng(1,3),false,googleMap);
+                    */
                 } else {
                     gpsTracker.showSettingsAlert();  // Alert if GPS is not enabled
                 }

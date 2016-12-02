@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/firstname"
+        android:hint="Firstname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/rectangle"
+        android:maxLength="20"/>
+
+    <EditText
+        android:id="@+id/surname"
+        android:hint="Surname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstname"
+        android:layout_margin="10dp"
+        android:background="@drawable/rectangle"
+        android:maxLength="20"/>
+
+    <EditText
+        android:id="@+id/handicap"
+        android:hint="Handicap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/surname"
+        android:background="@drawable/rectangle"
+        android:layout_margin="10dp"
+        android:maxLength="5"
+        android:inputType="numberDecimal"/>
+
+    <ImageView
+        android:id="@+id/account_picture"
+        android:src="@drawable/golf_player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"/>
+
+    <ListView
+        android:id="@+id/list_golf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/handicap"
+        android:choiceMode="singleChoice"
+        android:listSelector="@color/colorPrimary"/>
+
+</RelativeLayout>
