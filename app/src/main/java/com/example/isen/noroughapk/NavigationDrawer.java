@@ -10,15 +10,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
+import com.example.isen.noroughapk.Interfaces.LocationChangeCalcul;
 import com.example.isen.noroughapk.fragment_partie_lancée.ActivityFragment;
+import com.example.isen.noroughapk.fragment_partie_lancée.MapsFragment;
+import com.example.isen.noroughapk.json_helper.JsonReader;
+import com.example.isen.noroughapk.Class.Player;
+
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        ClickListenerFragment{
+        ClickListenerFragment,LocationChangeCalcul{
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     NavigationView navigationView;
+    Bundle bundle = new Bundle();
+    Player player;
+    ActivityFragment activityFragment;
+
+    private JsonReader jsonReader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +49,21 @@ public class NavigationDrawer extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
         navigationView.getMenu().performIdentifierAction(R.id.nav_start, 0);
+
+        jsonReader = new JsonReader(getApplicationContext());
+        jsonReader.execute();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        player = new Player();
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            player = bundle.getParcelable("PlayerFromFrag");}
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -108,7 +132,13 @@ public class NavigationDrawer extends AppCompatActivity
         } else if (id == R.id.nav_amis) {
 
         } else if (id == R.id.nav_mon_compte) {
-
+            AccountFragment accountFragment = new AccountFragment();
+            bundle.putParcelable("nomsGolf",jsonReader);
+            bundle.putParcelable("Player",player);
+            accountFragment.setArguments(bundle);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_main, accountFragment)
+                    .commit();
         } else if (id == R.id.nav_appareillage) {
 
         }
@@ -123,7 +153,11 @@ public class NavigationDrawer extends AppCompatActivity
 
         switch (name) {
             case "play":
-                ActivityFragment activityFragment = new ActivityFragment();
+                this.activityFragment = new ActivityFragment();
+                bundle.putParcelable("jsonReader",jsonReader);
+                activityFragment.setArguments(bundle);
+                MapsFragment mapsFragment = new MapsFragment();
+                mapsFragment.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_main, activityFragment)
                         .commit();
@@ -158,7 +192,6 @@ public class NavigationDrawer extends AppCompatActivity
             case "goToHistoryScoreFragment":
 
                 HistoryScoreFragment historyScoreFragment = new HistoryScoreFragment();
-                Bundle bundle = new Bundle();
                 bundle.putInt("ID",id);
                 historyScoreFragment.setArguments(bundle);
 
@@ -169,5 +202,11 @@ public class NavigationDrawer extends AppCompatActivity
             default:
                 break;
         }
+    }
+
+    @Override
+    public void LocationChangeCalcul(double latitude, double longitude) {
+        activityFragment.setTextStart(latitude,longitude); // This calls the method setTextStart in the Control fragment (ActivityFragment).
+
     }
 }

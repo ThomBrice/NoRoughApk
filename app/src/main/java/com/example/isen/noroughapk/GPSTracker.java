@@ -24,6 +24,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Toast;
 
+import com.example.isen.noroughapk.Interfaces.LocationChangeCalcul;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.Projection;
@@ -34,7 +35,7 @@ import com.google.android.gms.maps.model.Marker;
  * Created by Thomas on 14/11/2016.
  */
 
-public class GPSTracker extends Service implements LocationListener {
+public class GPSTracker extends Service implements LocationListener{
 
     private final Context mContext;
 
@@ -50,19 +51,21 @@ public class GPSTracker extends Service implements LocationListener {
     Location location; // location
     double latitude; // latitude
     double longitude; // longitude
+    LocationChangeCalcul locationChangeCalcul;
 
     //The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // meters
 
     //The minimum time between updates in millisecondes
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1000 * 60 *min  TODO mettre une valeur appropriée à la fin des tests
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 3; // 1000 * 60 *min  TODO mettre une valeur appropriée à la fin des tests
 
     //Declaring a Location Manager
     protected LocationManager locationManager;
 
-    public GPSTracker(Context context, GoogleMap googleMap) {
+    public GPSTracker(Context context, GoogleMap googleMap,LocationChangeCalcul locationChangeCalcul) {
         this.mContext = context;
         this.googleMap = googleMap;
+        this.locationChangeCalcul = locationChangeCalcul;
         getLocation();
     }
 
@@ -228,7 +231,8 @@ public class GPSTracker extends Service implements LocationListener {
     public void onLocationChanged(Location location) {
         this.location = location;
         getLocation();
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 17)); // zoom and move on my position
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(getLatitude(), getLongitude()), 17)); // zoom and move on my position
+        locationChangeCalcul.LocationChangeCalcul(getLatitude(),getLongitude());
     }
 
     @Override

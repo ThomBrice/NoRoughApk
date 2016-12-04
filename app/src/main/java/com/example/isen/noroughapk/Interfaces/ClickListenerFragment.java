@@ -7,6 +7,6 @@ package com.example.isen.noroughapk.Interfaces;
 public interface ClickListenerFragment {
     public void ClickListener(String name);
 
-    void ClickListener(String name, int id);
+    public void ClickListener(String name, int id);
 }
 
