@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.isen.noroughapk.R;
 import com.example.isen.noroughapk.json_helper.JsonReader;
 
@@ -36,7 +38,6 @@ public class ActivityFragment extends Fragment{
     private TextView endGreen;
     private HashMap<String, String> trou;
     private CalculDistances calculDistances;
-    private ProgressBar mProgressBar;
 
     public ActivityFragment() {
     }
@@ -56,8 +57,6 @@ public class ActivityFragment extends Fragment{
         startGreen = (TextView) result.findViewById(R.id.start_green);
         midGreen = (TextView) result.findViewById(R.id.mid_green);
         endGreen = (TextView) result.findViewById(R.id.end_green);
-
-        mProgressBar = (ProgressBar) result.findViewById(R.id.progressBar);
 
         bundle = this.getArguments();
         if(bundle !=null){
@@ -145,10 +144,6 @@ public class ActivityFragment extends Fragment{
         */
     }
 
-    Double convertRad(Double var) {
-        return (Math.PI * var) / 180.;
-    }
-
     public class CalculDistances extends AsyncTask<Double,Integer,Double> {
 
         Double mLat;
@@ -190,48 +185,34 @@ public class ActivityFragment extends Fragment{
         @Override
         protected void onPostExecute(Double aDouble) {
             super.onPostExecute(aDouble);
-            startGreen.setText(String.format("%1$.5f",valeurs[0]));
-            midGreen.setText(String.format("%1$.5f",valeurs[1]));
-            endGreen.setText(String.format("%1$.5f",valeurs[2]));
+            startGreen.setText(String.format("%1$.2f",valeurs[0]));
+            midGreen.setText(String.format("%1$.2f",valeurs[1]));
+            endGreen.setText(String.format("%1$.2f",valeurs[2]));
+            Toast.makeText(getContext(),"refresh",Toast.LENGTH_SHORT);
         }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            mProgressBar.setProgress(values[0]);
-        }
-
 
         public void Calcul(){
             Double RadLatitude = convertRad(mLat);
             Double RadLongitude = convertRad(mLong);
-            Double RadLatS = convertRad(latS);
-            Double RadLongS = convertRad(lonS);
 
+            Double RadLat = convertRad(latS);
+            Double RadLong = convertRad(lonS);
+            Double distanceS = 2 * asin(sqrt((sin((RadLatitude - RadLat) / 2))*(sin((RadLatitude - RadLat) / 2)) +
+                    cos(RadLatitude) * cos(RadLat)*(sin((RadLongitude - RadLong) / 2))*(sin((RadLongitude - RadLong) / 2))))* 6366;
 
-            Double distanceS = 2 * asin(sqrt((sin((RadLatitude - RadLatS) / 2))*(sin((RadLatitude - RadLatS) / 2)) +
-                    cos(RadLatitude) * cos(RadLatS)*(sin((RadLongitude - RadLongS) / 2))*(sin((RadLongitude - RadLongS) / 2))))* 6366;
+            RadLat = convertRad(latM);
+            RadLong = convertRad(lonM);
+            Double distanceM = 2 * asin(sqrt((sin((RadLatitude - RadLat) / 2))*(sin((RadLatitude - RadLat) / 2)) +
+                    cos(RadLatitude) * cos(RadLat)*(sin((RadLongitude - RadLong) / 2))*(sin((RadLongitude - RadLong) / 2))))* 6366;
 
-            publishProgress(25);
+            RadLat = convertRad(latE);
+            RadLong = convertRad(lonE);
+            Double distanceE = 2 * asin(sqrt((sin((RadLatitude - RadLat) / 2))*(sin((RadLatitude - RadLat) / 2)) +
+                    cos(RadLatitude) * cos(RadLat)*(sin((RadLongitude - RadLong) / 2))*(sin((RadLongitude - RadLong) / 2))))* 6366;
 
-            RadLatS = convertRad(latM);
-            RadLongS = convertRad(lonM);
-            Double distanceM = 2 * asin(sqrt((sin((RadLatitude - RadLatS) / 2))*(sin((RadLatitude - RadLatS) / 2)) +
-                    cos(RadLatitude) * cos(RadLatS)*(sin((RadLongitude - RadLongS) / 2))*(sin((RadLongitude - RadLongS) / 2))))* 6366;
-
-            publishProgress(50);
-            RadLatS = convertRad(latE);
-            RadLongS = convertRad(lonE);
-            Double distanceE = 2 * asin(sqrt((sin((RadLatitude - RadLatS) / 2))*(sin((RadLatitude - RadLatS) / 2)) +
-                    cos(RadLatitude) * cos(RadLatS)*(sin((RadLongitude - RadLongS) / 2))*(sin((RadLongitude - RadLongS) / 2))))* 6366;
-
-            publishProgress(75);
-
-            valeurs[0] = distanceS;
-            valeurs[1] = distanceM;
-            valeurs[2] = distanceE;
-            publishProgress(100);
-            publishProgress(0);
+            valeurs[0] = distanceS * 1000; //résultat en mètres
+            valeurs[1] = distanceM * 1000;
+            valeurs[2] = distanceE * 1000;
         }
 
         Double convertRad(Double var) {

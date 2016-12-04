@@ -34,6 +34,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.HashMap;
+
 /**
  * Created by Thomas B on 02/11/2016.
  */
@@ -85,13 +87,19 @@ public class MapsFragment extends Fragment {
                     googleMap.setMyLocationEnabled(true);
                     googleMap.getUiSettings().setCompassEnabled(false); // disable compass
 
-                    /*
-                    Marker marker = googleMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(latitude,longitude))
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                    Marker markerS = googleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(50.659526,3.133892))
+                            .title("start")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                    Marker markerM = googleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(50.659648,3.133894))
+                            .title("start")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                    Marker markerE = googleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(50.659816,3.133894))
+                            .title("start")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
-                    gpsTracker.animateMarker(marker,new LatLng(1,3),false,googleMap);
-                    */
                 } else {
                     gpsTracker.showSettingsAlert();  // Alert if GPS is not enabled
                 }

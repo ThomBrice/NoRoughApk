@@ -28,6 +28,7 @@ public class NavigationDrawer extends AppCompatActivity
     Bundle bundle = new Bundle();
     Player player;
     ActivityFragment activityFragment;
+    MapsFragment mapsFragment;
 
     private JsonReader jsonReader;
 
@@ -156,7 +157,7 @@ public class NavigationDrawer extends AppCompatActivity
                 this.activityFragment = new ActivityFragment();
                 bundle.putParcelable("jsonReader",jsonReader);
                 activityFragment.setArguments(bundle);
-                MapsFragment mapsFragment = new MapsFragment();
+                this.mapsFragment = new MapsFragment();
                 mapsFragment.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_main, activityFragment)
