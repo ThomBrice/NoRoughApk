@@ -160,7 +160,7 @@ public class ActivityFragment extends Fragment{
 
         }
 
-        public CalculDistances(Double latS, Double mLong, Double mLat, Double lonS, Double latM, Double lonM, Double latE, Double lonE) {
+        public CalculDistances(Double mLat, Double mLong, Double latS, Double lonS, Double latM, Double lonM, Double latE, Double lonE) {
             this.latS = latS;
             this.mLong = mLong;
             this.mLat = mLat;
