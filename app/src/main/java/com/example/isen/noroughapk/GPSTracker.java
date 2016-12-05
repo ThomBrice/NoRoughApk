@@ -231,7 +231,7 @@ public class GPSTracker extends Service implements LocationListener{
     public void onLocationChanged(Location location) {
         this.location = location;
         getLocation();
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(getLatitude(), getLongitude()), 17)); // zoom and move on my position
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(getLatitude(), getLongitude()), 18)); // zoom and move on my position
         locationChangeCalcul.LocationChangeCalcul(getLatitude(),getLongitude());
     }
 

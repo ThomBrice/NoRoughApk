@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 import com.example.isen.noroughapk.Interfaces.LocationChangeCalcul;
+import com.example.isen.noroughapk.Interfaces.TrouChangeListener;
 import com.example.isen.noroughapk.fragment_partie_lancée.ActivityFragment;
 import com.example.isen.noroughapk.fragment_partie_lancée.MapsFragment;
 import com.example.isen.noroughapk.json_helper.JsonReader;
@@ -21,7 +22,7 @@ import com.example.isen.noroughapk.Class.Player;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        ClickListenerFragment,LocationChangeCalcul{
+        ClickListenerFragment,LocationChangeCalcul,TrouChangeListener{
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     NavigationView navigationView;
@@ -207,7 +208,10 @@ public class NavigationDrawer extends AppCompatActivity
 
     @Override
     public void LocationChangeCalcul(double latitude, double longitude) {
+        Toast.makeText(this.getApplicationContext(),"refresh",Toast.LENGTH_LONG);
         activityFragment.setTextStart(latitude,longitude); // This calls the method setTextStart in the Control fragment (ActivityFragment).
-
+    }
+    public void TrouChangeListener(int num){
+        activityFragment.setNum(num);
     }
 }

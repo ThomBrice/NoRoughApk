@@ -4,13 +4,17 @@ package com.example.isen.noroughapk.fragment_partie_lancée;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.isen.noroughapk.BDD.model.Partie;
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
+import com.example.isen.noroughapk.Interfaces.TrouChangeListener;
 import com.example.isen.noroughapk.NavigationDrawer;
 import com.example.isen.noroughapk.R;
 import com.example.isen.noroughapk.BDD.adapters.PartiesAdapter;
@@ -37,6 +41,8 @@ public class ScoreFragment extends Fragment {
     Integer[] newScore = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     int lecteurHandicap = 1;
     int scoreTotal = 0;
+    TextView numeroTrou;
+    TrouChangeListener TrouChangeListener;
 
     public ScoreFragment() {
         // Required empty public constructor
@@ -50,6 +56,7 @@ public class ScoreFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_score, container, false);
 
         listenerFragment = (NavigationDrawer) this.getActivity();
+        TrouChangeListener = (NavigationDrawer) this.getActivity();
 
         FloatingActionButton nextHole = (FloatingActionButton) view.findViewById(R.id.nextHole);
         nextHole.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +72,25 @@ public class ScoreFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 changeScorePlus(view);
+            }
+        });
+
+        numeroTrou = (TextView) view.findViewById(R.id.numeroTrou);
+        numeroTrou.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                TrouChangeListener.TrouChangeListener(Integer.parseInt(numeroTrou.getText().toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 

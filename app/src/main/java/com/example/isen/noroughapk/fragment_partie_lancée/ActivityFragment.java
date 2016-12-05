@@ -38,6 +38,9 @@ public class ActivityFragment extends Fragment{
     private TextView endGreen;
     private HashMap<String, String> trou;
     private CalculDistances calculDistances;
+    private Integer num;
+    private Double latitude;
+    private Double longitude;
 
     public ActivityFragment() {
     }
@@ -62,8 +65,9 @@ public class ActivityFragment extends Fragment{
         if(bundle !=null){
             jsonReader = bundle.getParcelable("jsonReader");
         }
+        num=0;
 
-        trou = jsonReader.getCoordonneesList().get(0);
+        trou = jsonReader.getCoordonneesList().get(num);
 
         calculDistances = new CalculDistances();
 
@@ -109,39 +113,21 @@ public class ActivityFragment extends Fragment{
 
     }
 
-    public void setTextStart(Double latitude, Double longitude){
-/*
-        Double RadLatitude = convertRad(latitude);
-        Double RadLongitude = convertRad(longitude);
-        Double RadLatS = convertRad(Double.parseDouble(trou.get("LatS")));
-        Double RadLongS = convertRad(Double.parseDouble(trou.get("LonS")));
-
-        Double distanceS = 2 * asin(sqrt((sin((RadLatitude - RadLatS) / 2))*(sin((RadLatitude - RadLatS) / 2)) +
-                cos(RadLatitude) * cos(RadLatS)*(sin((RadLongitude - RadLongS) / 2))*(sin((RadLongitude - RadLongS) / 2))))* 6366;
-        RadLatS = convertRad(Double.parseDouble(trou.get("LatM")));
-        RadLongS = convertRad(Double.parseDouble(trou.get("LonM")));
-        Double distanceM = 2 * asin(sqrt((sin((RadLatitude - RadLatS) / 2))*(sin((RadLatitude - RadLatS) / 2)) +
-                cos(RadLatitude) * cos(RadLatS)*(sin((RadLongitude - RadLongS) / 2))*(sin((RadLongitude - RadLongS) / 2))))* 6366;
-        RadLatS = convertRad(Double.parseDouble(trou.get("LatE")));
-        RadLongS = convertRad(Double.parseDouble(trou.get("LonE")));
-        Double distanceE = 2 * asin(sqrt((sin((RadLatitude - RadLatS) / 2))*(sin((RadLatitude - RadLatS) / 2)) +
-                cos(RadLatitude) * cos(RadLatS)*(sin((RadLongitude - RadLongS) / 2))*(sin((RadLongitude - RadLongS) / 2))))* 6366;
-
-        startGreen.setText(String.format(String.valueOf(distanceS.intValue()),"#,##"));
-        midGreen.setText(String.valueOf(distanceM.intValue()));
-        endGreen.setText(String.valueOf(distanceE.intValue()));
-*/
+    public void setTextStart(Double latitude,Double longitude){
+        this.latitude = latitude;
+        this.longitude = longitude;
         calculDistances = new CalculDistances(latitude,longitude,Double.parseDouble(trou.get("LatS")),Double.parseDouble(trou.get("LonS")),
                                            Double.parseDouble(trou.get("LatM")),Double.parseDouble(trou.get("LonM")),
                                            Double.parseDouble(trou.get("LatE")),Double.parseDouble(trou.get("LonE")));
-
         calculDistances.execute();
-        /*
-        valeurs = calculDistances.getValeurs();
-        startGreen.setText(String.format("%1$.3f",valeurs[0]));
-        midGreen.setText(String.format("%1$.3f",valeurs[1]));
-        endGreen.setText(String.format("%1$.3f",valeurs[2]));
-        */
+    }
+
+    public void setNum(int num){
+        trou = jsonReader.getCoordonneesList().get(num-1);
+        calculDistances = new CalculDistances(latitude,longitude,Double.parseDouble(trou.get("LatS")),Double.parseDouble(trou.get("LonS")),
+                Double.parseDouble(trou.get("LatM")),Double.parseDouble(trou.get("LonM")),
+                Double.parseDouble(trou.get("LatE")),Double.parseDouble(trou.get("LonE")));
+        calculDistances.execute();
     }
 
     public class CalculDistances extends AsyncTask<Double,Integer,Double> {
@@ -188,7 +174,6 @@ public class ActivityFragment extends Fragment{
             startGreen.setText(String.format("%1$.2f",valeurs[0]));
             midGreen.setText(String.format("%1$.2f",valeurs[1]));
             endGreen.setText(String.format("%1$.2f",valeurs[2]));
-            Toast.makeText(getContext(),"refresh",Toast.LENGTH_SHORT);
         }
 
         public void Calcul(){
