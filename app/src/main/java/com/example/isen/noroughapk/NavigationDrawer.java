@@ -1,6 +1,10 @@
 package com.example.isen.noroughapk;
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -24,12 +28,15 @@ public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ClickListenerFragment,LocationChangeCalcul,TrouChangeListener{
 
-    FragmentManager fragmentManager = getSupportFragmentManager();
-    NavigationView navigationView;
-    Bundle bundle = new Bundle();
-    Player player;
-    ActivityFragment activityFragment;
-    MapsFragment mapsFragment;
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private NavigationView navigationView;
+    private Bundle bundle = new Bundle();
+    private Player player;
+    private ActivityFragment activityFragment;
+    private MapsFragment mapsFragment;
+    private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
+    private final static int REQUEST_CODE_ENABLE_GPS = 0;
+    private boolean doubleBackToExitPressedOnce = false;
 
     private JsonReader jsonReader;
 
@@ -54,6 +61,25 @@ public class NavigationDrawer extends AppCompatActivity
 
         jsonReader = new JsonReader(getApplicationContext());
         jsonReader.execute();
+
+        /*
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (bluetoothAdapter == null) {// Le terminal ne possède pas le Bluetooth
+            Toast.makeText(this, "Votre smartphone ne dispose pas de module bluetooth \n" +
+                    "NoRough va s'arréter.", Toast.LENGTH_LONG).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                }
+            }, 2000); //wait 2 seconds
+            onDestroy();
+        }
+        if (!bluetoothAdapter.isEnabled()) {
+            Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
+        }
+        */
     }
 
     @Override
@@ -68,13 +94,32 @@ public class NavigationDrawer extends AppCompatActivity
     }
     @Override
     public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            onDestroy();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_LONG).show();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView.getMenu().performIdentifierAction(R.id.nav_start,0);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000); //wait 2 seconds
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+
+        int id= android.os.Process.myPid();
+        android.os.Process.killProcess(id);
     }
 
     @Override
@@ -151,6 +196,18 @@ public class NavigationDrawer extends AppCompatActivity
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQUEST_CODE_ENABLE_BLUETOOTH)
+            return;
+        if (resultCode == RESULT_OK) {
+            // L'utilisation a activé le bluetooth
+        } else {
+            // L'utilisation n'a pas activé le bluetooth
+        }
+    }
+
+    @Override
     public void ClickListener(String name ) {
 
         switch (name) {
@@ -211,6 +268,8 @@ public class NavigationDrawer extends AppCompatActivity
         Toast.makeText(this.getApplicationContext(),"refresh",Toast.LENGTH_LONG);
         activityFragment.setTextStart(latitude,longitude); // This calls the method setTextStart in the Control fragment (ActivityFragment).
     }
+
+    @Override
     public void TrouChangeListener(int num){
         activityFragment.setNum(num);
     }

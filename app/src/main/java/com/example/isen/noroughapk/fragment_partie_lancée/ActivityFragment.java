@@ -130,6 +130,7 @@ public class ActivityFragment extends Fragment{
         calculDistances.execute();
     }
 
+
     public class CalculDistances extends AsyncTask<Double,Integer,Double> {
 
         Double mLat;
@@ -171,29 +172,29 @@ public class ActivityFragment extends Fragment{
         @Override
         protected void onPostExecute(Double aDouble) {
             super.onPostExecute(aDouble);
-            startGreen.setText(String.format("%1$.2f",valeurs[0]));
-            midGreen.setText(String.format("%1$.2f",valeurs[1]));
-            endGreen.setText(String.format("%1$.2f",valeurs[2]));
+            startGreen.setText(String.format("%1$.2f", valeurs[0]));
+            midGreen.setText(String.format("%1$.2f", valeurs[1]));
+            endGreen.setText(String.format("%1$.2f", valeurs[2]));
         }
 
-        public void Calcul(){
+        public void Calcul() {
             Double RadLatitude = convertRad(mLat);
             Double RadLongitude = convertRad(mLong);
 
             Double RadLat = convertRad(latS);
             Double RadLong = convertRad(lonS);
-            Double distanceS = 2 * asin(sqrt((sin((RadLatitude - RadLat) / 2))*(sin((RadLatitude - RadLat) / 2)) +
-                    cos(RadLatitude) * cos(RadLat)*(sin((RadLongitude - RadLong) / 2))*(sin((RadLongitude - RadLong) / 2))))* 6366;
+            Double distanceS = 2 * asin(sqrt((sin((RadLatitude - RadLat) / 2)) * (sin((RadLatitude - RadLat) / 2)) +
+                    cos(RadLatitude) * cos(RadLat) * (sin((RadLongitude - RadLong) / 2)) * (sin((RadLongitude - RadLong) / 2)))) * 6366;
 
             RadLat = convertRad(latM);
             RadLong = convertRad(lonM);
-            Double distanceM = 2 * asin(sqrt((sin((RadLatitude - RadLat) / 2))*(sin((RadLatitude - RadLat) / 2)) +
-                    cos(RadLatitude) * cos(RadLat)*(sin((RadLongitude - RadLong) / 2))*(sin((RadLongitude - RadLong) / 2))))* 6366;
+            Double distanceM = 2 * asin(sqrt((sin((RadLatitude - RadLat) / 2)) * (sin((RadLatitude - RadLat) / 2)) +
+                    cos(RadLatitude) * cos(RadLat) * (sin((RadLongitude - RadLong) / 2)) * (sin((RadLongitude - RadLong) / 2)))) * 6366;
 
             RadLat = convertRad(latE);
             RadLong = convertRad(lonE);
-            Double distanceE = 2 * asin(sqrt((sin((RadLatitude - RadLat) / 2))*(sin((RadLatitude - RadLat) / 2)) +
-                    cos(RadLatitude) * cos(RadLat)*(sin((RadLongitude - RadLong) / 2))*(sin((RadLongitude - RadLong) / 2))))* 6366;
+            Double distanceE = 2 * asin(sqrt((sin((RadLatitude - RadLat) / 2)) * (sin((RadLatitude - RadLat) / 2)) +
+                    cos(RadLatitude) * cos(RadLat) * (sin((RadLongitude - RadLong) / 2)) * (sin((RadLongitude - RadLong) / 2)))) * 6366;
 
             valeurs[0] = distanceS * 1000; //résultat en mètres
             valeurs[1] = distanceM * 1000;

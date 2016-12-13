@@ -5,9 +5,12 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -35,6 +39,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
+
+import static java.lang.Math.asin;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.lang.Math.sqrt;
 
 /**
  * Created by Thomas B on 02/11/2016.
@@ -48,6 +57,12 @@ public class MapsFragment extends Fragment {
     private LocationChangeCalcul locationChangeCalcul;
 
     public MapsFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -87,24 +102,57 @@ public class MapsFragment extends Fragment {
                     googleMap.setMyLocationEnabled(true);
                     googleMap.getUiSettings().setCompassEnabled(false); // disable compass
 
-                    Marker markerS = googleMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(50.659526,3.133892))
-                            .title("start")
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-                    Marker markerM = googleMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(50.659648,3.133894))
-                            .title("start")
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-                    Marker markerE = googleMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(50.659816,3.133894))
-                            .title("start")
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                    googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                        @Override
+                        public void onMapClick(LatLng latLng) {
+                            //calculDistances = new CalculDistances(new LatLng(gpsTracker.getLatitude(),gpsTracker.getLongitude()),latLng);
+
+                            // Creating a marker
+                            MarkerOptions markerOptions = new MarkerOptions();
+
+                            // Setting the position for the marker
+                            markerOptions.position(latLng);
+
+                            // Setting the title for the marker.
+                            // This will be displayed on taping the marker
+                            LatLng myLatLng = new LatLng(gpsTracker.getLatitude(),gpsTracker.getLongitude());
+                            markerOptions.title(String.format("%1$.2f",Calcul(myLatLng,latLng)));
+
+                            // Clears the previously touched position
+                            googleMap.clear();
+
+                            // Placing a marker on the touched position
+                            Marker marker =googleMap.addMarker(markerOptions);
+                            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.target));
+
+                            // always show the title
+                            marker.showInfoWindow();
+
+                        }
+                    });
 
                 } else {
                     gpsTracker.showSettingsAlert();  // Alert if GPS is not enabled
                 }
             }
         });
+    }
+
+    public Double Calcul(LatLng myLatLng, LatLng markerLatLng) {
+        Double distance;
+        Double RadMyLatitude = convertRad(myLatLng.latitude);
+        Double RadMyLongitude = convertRad(myLatLng.longitude);
+
+        Double RadMarkerLat = convertRad(markerLatLng.latitude);
+        Double RadMarkerLong = convertRad(markerLatLng.longitude);
+        distance = 2 * asin(sqrt((sin((RadMyLatitude - RadMarkerLat) / 2)) * (sin((RadMyLatitude - RadMarkerLat) / 2)) +
+                cos(RadMyLatitude) * cos(RadMarkerLat) * (sin((RadMyLongitude - RadMarkerLong) / 2)) * (sin((RadMyLongitude - RadMarkerLong) / 2)))) * 6366;
+        distance*=1000;
+        return distance;
+    }
+
+    Double convertRad(Double var) {
+        return (Math.PI * var) / 180.;
     }
 
     @Override
