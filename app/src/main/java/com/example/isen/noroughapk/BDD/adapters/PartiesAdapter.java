@@ -19,9 +19,7 @@ import com.example.isen.noroughapk.R;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-/**
- * Created by Thaddée on 09/11/2016.
- */
+
 
 public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
     final Context context;

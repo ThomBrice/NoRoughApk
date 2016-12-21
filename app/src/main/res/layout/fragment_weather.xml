@@ -1,0 +1,119 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/WeahterFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:layout_marginTop="100dp"
+    android:background="@color/colorPrimaryDark"
+    android:weightSum="1">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/WeatherCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="15dp"
+        app:cardCornerRadius="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="363dp"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextVille"
+                android:text=""
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TextVille"
+                android:src="@drawable/thermometer"
+                android:id="@+id/ThermometerImage" />
+
+            <TextView
+                android:id="@+id/ThermometerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TextVille"
+                android:layout_toRightOf="@id/ThermometerImage"
+                android:text=""/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/WindImage"
+                android:src="@drawable/wind"
+                android:layout_below="@id/ThermometerImage"
+               />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/WindText"
+                android:text=""
+                android:layout_below="@+id/ThermometerImage"
+                android:layout_toRightOf="@id/WindImage"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/WindRose"
+                android:src="@drawable/windrose"
+                android:layout_below="@+id/WindImage"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextWindRose"
+                android:text=""
+                android:layout_below="@+id/WindImage"
+                android:layout_toRightOf="@+id/WindRose"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/PressureImage"
+                android:src="@drawable/pressure"
+                android:layout_below="@+id/WindRose"
+               />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextPressure"
+                android:text=""
+                android:layout_below="@+id/WindRose"
+                android:layout_toRightOf="@+id/WindRose"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/AtmosphericImage"
+                android:src="@drawable/atmospheric"
+                android:layout_below="@+id/PressureImage"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextAtmospheric"
+                android:text=""
+                android:layout_below="@+id/PressureImage"
+                android:layout_toRightOf="@+id/PressureImage"/>
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
+
+
+
+

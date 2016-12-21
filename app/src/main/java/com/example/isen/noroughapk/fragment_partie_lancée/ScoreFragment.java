@@ -1,6 +1,7 @@
 package com.example.isen.noroughapk.fragment_partie_lancée;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -9,17 +10,25 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.isen.noroughapk.BDD.adapters.PartiesAdapter;
 import com.example.isen.noroughapk.BDD.model.Partie;
+import com.example.isen.noroughapk.BDD.realm.RealmController;
+import com.example.isen.noroughapk.GPSTracker;
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
+import com.example.isen.noroughapk.Interfaces.LocationChangeCalcul;
 import com.example.isen.noroughapk.Interfaces.TrouChangeListener;
 import com.example.isen.noroughapk.NavigationDrawer;
 import com.example.isen.noroughapk.R;
-import com.example.isen.noroughapk.BDD.adapters.PartiesAdapter;
-import com.example.isen.noroughapk.BDD.realm.RealmController;
+import com.example.isen.noroughapk.Weather.OpenWheatherMap;
+import com.example.isen.noroughapk.Weather.WeatherCommon;
+import com.example.isen.noroughapk.Weather.WeatherHelper;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,9 +36,7 @@ import java.util.Calendar;
 
 import io.realm.Realm;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class ScoreFragment extends Fragment {
     private Realm realm;
     private PartiesAdapter adapter;
@@ -44,8 +51,15 @@ public class ScoreFragment extends Fragment {
     TextView numeroTrou;
     TrouChangeListener TrouChangeListener;
 
+    TextView TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille;
+    OpenWheatherMap openWheatherMap = new OpenWheatherMap();
+    static double lat, lng;
+    private GPSTracker gpsTracker;
+    private GoogleMap googleMap;
+    private LocationChangeCalcul locationChangeCalcul;
+
     public ScoreFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -75,6 +89,18 @@ public class ScoreFragment extends Fragment {
             }
         });
 
+
+
+        // edit the TextView and call the Location fonction to get the Location value and then get Weather data
+        TxtThermometerText = (TextView) view.findViewById(R.id.ThermometerText);
+        TXtWindText = (TextView) view.findViewById(R.id.WindText);
+        TxtTextWindRose = (TextView) view.findViewById(R.id.TextWindRose);
+        TxtTextPressure = (TextView) view.findViewById(R.id.TextPressure);
+        TxtTextAtmospheric = (TextView) view.findViewById(R.id.TextAtmospheric);
+        TxtVille = (TextView) view.findViewById(R.id.TextVille);
+        getLocation(view);
+
+
         numeroTrou = (TextView) view.findViewById(R.id.numeroTrou);
         numeroTrou.addTextChangedListener(new TextWatcher() {
 
@@ -96,7 +122,6 @@ public class ScoreFragment extends Fragment {
 
         //get realm instance
         this.realm = RealmController.with(this).getRealm();
-
         return view;
     }
 
@@ -116,8 +141,9 @@ public class ScoreFragment extends Fragment {
                 listenerFragment.ClickListener("goToHistory");
 
 
+            } else {
 
-            }else {
+
                 int parNumber = (ParGolfSart[trouNumber]);
 
                 trouTextView.setText("" + (trouNumber + 1));
@@ -233,6 +259,60 @@ public class ScoreFragment extends Fragment {
             }
         }
     }
+
+    public void getLocation(View view) {
+        // from GPS Tracker we get the lat & lng value
+        locationChangeCalcul = (NavigationDrawer) this.getActivity();
+
+        gpsTracker = new GPSTracker(getContext(), googleMap, locationChangeCalcul);
+        lat = gpsTracker.getLatitude();
+        lng = gpsTracker.getLongitude();
+
+        // 2 digits of precision
+         lat = 50.47373;
+        lat = Math.round((lat*100));
+        lat= lat/100;
+        lng = 3.499017999999978;
+        lng = Math.round((lng*100));
+        lng= lng/100;
+
+        new GetWeather().execute(WeatherCommon.apiRequest(String.valueOf(lat), String.valueOf(lng)));
+    }
+
+
+    private class GetWeather extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String stream = null;
+           String urlString = params[0]; // we get the URL
+        //    String urlString = "http://api.openweathermap.org/data/2.5/weather?lat=50.63&lon=3.06&appid=ed5e3c3aa4bac08cd2de5807706398d6";
+            WeatherHelper http = new WeatherHelper();
+            return stream = http.getHTTPData(urlString); // URL need to get the weather data
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Gson gson = new Gson();
+            Type myType = new TypeToken<OpenWheatherMap>() {
+            }.getType();
+            openWheatherMap = gson.fromJson(s, myType); // we get all the data from the URL on a Gson Filz
+
+            // We set all the data we need
+            TxtVille.setText(String.valueOf(openWheatherMap.getName()));
+            TXtWindText.setText(String.valueOf(openWheatherMap.getWind().getSpeed()));
+            TxtTextWindRose.setText(String.valueOf(openWheatherMap.getWind().getDeg()));
+            TxtThermometerText.setText(String.format("%.1f °C", openWheatherMap.getMainWeather().getTemp() - 273, 15));
+            TxtTextPressure.setText(String.valueOf(openWheatherMap.getMainWeather().getPressure()) + " hPa");
+            TxtTextAtmospheric.setText(String.valueOf(openWheatherMap.getMainWeather().getHumidity()) + "%");
+
+
+        }
+    }
+
+
 }
 
 
