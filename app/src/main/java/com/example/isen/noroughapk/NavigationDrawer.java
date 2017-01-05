@@ -1,10 +1,8 @@
 package com.example.isen.noroughapk;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -16,13 +14,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.isen.noroughapk.Class.Player;
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 import com.example.isen.noroughapk.Interfaces.LocationChangeCalcul;
 import com.example.isen.noroughapk.Interfaces.TrouChangeListener;
 import com.example.isen.noroughapk.fragment_partie_lancée.ActivityFragment;
 import com.example.isen.noroughapk.fragment_partie_lancée.MapsFragment;
+import com.example.isen.noroughapk.fragment_partie_lancée.ScoreFragment;
 import com.example.isen.noroughapk.json_helper.JsonReader;
-import com.example.isen.noroughapk.Class.Player;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -33,6 +32,7 @@ public class NavigationDrawer extends AppCompatActivity
     private Bundle bundle = new Bundle();
     private Player player;
     private ActivityFragment activityFragment;
+    private ScoreFragment scoreFragment;
     private MapsFragment mapsFragment;
     private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
     private final static int REQUEST_CODE_ENABLE_GPS = 0;
@@ -213,6 +213,7 @@ public class NavigationDrawer extends AppCompatActivity
         switch (name) {
             case "play":
                 this.activityFragment = new ActivityFragment();
+                this.scoreFragment = new ScoreFragment();
                 bundle.putParcelable("jsonReader",jsonReader);
                 activityFragment.setArguments(bundle);
                 this.mapsFragment = new MapsFragment();
@@ -267,6 +268,7 @@ public class NavigationDrawer extends AppCompatActivity
     public void LocationChangeCalcul(double latitude, double longitude) {
         Toast.makeText(this.getApplicationContext(),"refresh",Toast.LENGTH_LONG);
         activityFragment.setTextStart(latitude,longitude); // This calls the method setTextStart in the Control fragment (ActivityFragment).
+        //scoreFragment.setTextStart(latitude,longitude);
     }
 
     @Override

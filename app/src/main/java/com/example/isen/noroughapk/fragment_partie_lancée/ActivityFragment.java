@@ -10,9 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.isen.noroughapk.R;
 import com.example.isen.noroughapk.json_helper.JsonReader;
@@ -21,7 +19,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static java.lang.Math.*;
+import static java.lang.Math.asin;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.lang.Math.sqrt;
 
 /**
  * Created by Thomas B on 02/11/2016.
@@ -41,6 +42,7 @@ public class ActivityFragment extends Fragment{
     private Integer num;
     private Double latitude;
     private Double longitude;
+    private ScoreFragment scoreFragment;
 
     public ActivityFragment() {
     }
@@ -50,6 +52,8 @@ public class ActivityFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View result = inflater.inflate(R.layout.fragment_activity, container, false);
+
+        scoreFragment = new ScoreFragment();
 
         viewPager = (ViewPager) result.findViewById(R.id.viewpager_activité);
         setupViewPager(viewPager);
@@ -78,7 +82,7 @@ public class ActivityFragment extends Fragment{
         // Defines the number of tabs by setting appropriate fragment and tab name.
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new MapsFragment(), "Maps");
-        adapter.addFragment(new ScoreFragment(), "Score");
+        adapter.addFragment(scoreFragment, "Score");
         viewPager.setAdapter(adapter);
     }
 
@@ -120,6 +124,7 @@ public class ActivityFragment extends Fragment{
                                            Double.parseDouble(trou.get("LatM")),Double.parseDouble(trou.get("LonM")),
                                            Double.parseDouble(trou.get("LatE")),Double.parseDouble(trou.get("LonE")));
         calculDistances.execute();
+        scoreFragment.setTextStart(latitude, longitude);
     }
 
     public void setNum(int num){
