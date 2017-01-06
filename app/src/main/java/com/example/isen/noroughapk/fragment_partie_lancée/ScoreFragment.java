@@ -5,14 +5,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.isen.noroughapk.BDD.adapters.PartiesAdapter;
 import com.example.isen.noroughapk.BDD.model.Partie;
 import com.example.isen.noroughapk.BDD.realm.RealmController;
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
@@ -36,24 +33,20 @@ import io.realm.Realm;
 
 public class ScoreFragment extends Fragment {
     private Realm realm;
-    private PartiesAdapter adapter;
     private ClickListenerFragment listenerFragment;
     Integer[] Score = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     Integer[] Handicap = new Integer[]{7, 3, 15, 11, 1, 9, 17, 13, 5, 8, 4, 16, 14, 2, 18, 10, 6, 12};
     Integer[] ParGolfSart = new Integer[]{4, 3, 5, 4, 4, 4, 3, 4, 5, 4, 4, 3, 4, 4, 3, 4, 4, 5};
-    int handicap = 18;
     Integer[] newScore = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    int lecteurHandicap = 1;
-    int scoreTotal = 0;
-    TextView numeroTrou;
+
+    int lecteurHandicap = 1, scoreTotal = 0, handicap = 18;
     TrouChangeListener TrouChangeListener;
     boolean weatherRetreive=false;
-    String Wind="";
-    int ViewerReady;
+
 
     GetWeather weatherAsync;
 
-    TextView TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille;
+    TextView numeroTrou, TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille;
     OpenWheatherMap openWheatherMap = new OpenWheatherMap();
     static double lat, lng;
 
@@ -61,7 +54,6 @@ public class ScoreFragment extends Fragment {
 
     public ScoreFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,6 +82,18 @@ public class ScoreFragment extends Fragment {
         });
 
 
+        FloatingActionButton scoreMoins =(FloatingActionButton) view.findViewById(R.id.scoremoins);
+        scoreMoins.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                changeScoreMoins(view);
+            }
+        });
+
+
+
+
         // edit the TextView and call the Location fonction to get the Location value and then get Weather data
         TxtThermometerText = (TextView) view.findViewById(R.id.ThermometerText);
         TXtWindText = (TextView) view.findViewById(R.id.WindText);
@@ -102,7 +106,7 @@ public class ScoreFragment extends Fragment {
 
 
         numeroTrou = (TextView) view.findViewById(R.id.numeroTrou);
-        numeroTrou.addTextChangedListener(new TextWatcher() {
+        /*numeroTrou.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -119,18 +123,23 @@ public class ScoreFragment extends Fragment {
 
             }
         });
-
+*/
         //get realm instance
         this.realm = RealmController.with(this).getRealm();
         return view;
     }
 
-
+    /*
+    public int getNum(){
+        return Integer.parseInt(numeroTrou.getText().toString());
+    }
+*/
     public void changeNextHole(View view) {
         TextView trouTextView = (TextView) view.findViewById(R.id.numeroTrou);
         TextView scoreTextView = (TextView) view.findViewById(R.id.score);
         TextView parTextView = (TextView) view.findViewById(R.id.Par);
 
+        TrouChangeListener.TrouChangeListener(Integer.parseInt(numeroTrou.getText().toString()));
 
         int trouNumber = (Integer.parseInt(trouTextView.getText().toString()));
         if (trouNumber < 19) {
@@ -164,6 +173,14 @@ public class ScoreFragment extends Fragment {
 
         scoreTextView.setText("" + (scoreNumber + 1));
 
+    }
+
+    public void changeScoreMoins(View view){
+        TextView scoreTextView= (TextView) view.findViewById(R.id.score);
+        int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
+        if (scoreNumber!=0) {
+            scoreTextView.setText("" + (scoreNumber - 1));
+        }
     }
 
     private void setRealmData(Integer Carte[]) {
@@ -335,10 +352,8 @@ public class ScoreFragment extends Fragment {
             this.lng = longitude;
             lat = Math.round((lat * 100));
             lat = lat / 100;
-            //lng = 3.499017999999978;
             lng = Math.round((lng * 100));
             lng = lng / 100;
-
 
             weatherAsync.execute(WeatherCommon.apiRequest(String.valueOf(lat), String.valueOf(lng)));
         }

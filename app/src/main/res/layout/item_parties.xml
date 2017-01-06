@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:onClick="true"
-    app:cardCornerRadius="5dp">
+    app:cardCornerRadius="@dimen/corner_size">
 
     <LinearLayout
         android:layout_width="match_parent"

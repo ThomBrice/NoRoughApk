@@ -69,9 +69,9 @@ public class ActivityFragment extends Fragment{
         if(bundle !=null){
             jsonReader = bundle.getParcelable("jsonReader");
         }
-        num=0;
 
-        trou = jsonReader.getCoordonneesList().get(num);
+        num=1;
+        //trou = jsonReader.getCoordonneesList().get(num);
 
         calculDistances = new CalculDistances();
 
@@ -120,6 +120,7 @@ public class ActivityFragment extends Fragment{
     public void setTextStart(Double latitude,Double longitude){
         this.latitude = latitude;
         this.longitude = longitude;
+        trou = jsonReader.getCoordonneesList().get(num);
         calculDistances = new CalculDistances(latitude,longitude,Double.parseDouble(trou.get("LatS")),Double.parseDouble(trou.get("LonS")),
                                            Double.parseDouble(trou.get("LatM")),Double.parseDouble(trou.get("LonM")),
                                            Double.parseDouble(trou.get("LatE")),Double.parseDouble(trou.get("LonE")));
@@ -128,11 +129,14 @@ public class ActivityFragment extends Fragment{
     }
 
     public void setNum(int num){
-        trou = jsonReader.getCoordonneesList().get(num-1);
-        calculDistances = new CalculDistances(latitude,longitude,Double.parseDouble(trou.get("LatS")),Double.parseDouble(trou.get("LonS")),
-                Double.parseDouble(trou.get("LatM")),Double.parseDouble(trou.get("LonM")),
-                Double.parseDouble(trou.get("LatE")),Double.parseDouble(trou.get("LonE")));
-        calculDistances.execute();
+        this.num=num;
+        if(latitude!=null && longitude!=null) {
+            trou = jsonReader.getCoordonneesList().get(num);
+            calculDistances = new CalculDistances(latitude, longitude, Double.parseDouble(trou.get("LatS")), Double.parseDouble(trou.get("LonS")),
+                    Double.parseDouble(trou.get("LatM")), Double.parseDouble(trou.get("LonM")),
+                    Double.parseDouble(trou.get("LatE")), Double.parseDouble(trou.get("LonE")));
+            calculDistances.execute();
+        }
     }
 
 

@@ -267,8 +267,8 @@ public class NavigationDrawer extends AppCompatActivity
     @Override
     public void LocationChangeCalcul(double latitude, double longitude) {
         Toast.makeText(this.getApplicationContext(),"refresh",Toast.LENGTH_LONG);
+        //int num = scoreFragment.getNum();
         activityFragment.setTextStart(latitude,longitude); // This calls the method setTextStart in the Control fragment (ActivityFragment).
-        //scoreFragment.setTextStart(latitude,longitude);
     }
 
     @Override

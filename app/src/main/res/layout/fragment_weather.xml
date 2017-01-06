@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     android:layout_marginTop="100dp"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/cardview_light_background"
     android:weightSum="1">
 
 
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
 
         android:layout_margin="15dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="@dimen/corner_size">
 
 
         <RelativeLayout
