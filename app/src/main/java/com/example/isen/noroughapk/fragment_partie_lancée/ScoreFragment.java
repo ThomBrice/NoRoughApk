@@ -41,7 +41,7 @@ public class ScoreFragment extends Fragment {
 
     int lecteurHandicap = 1, scoreTotal = 0, handicap = 18;
     TrouChangeListener TrouChangeListener;
-    boolean weatherRetreive=false;
+    boolean weatherRetreive = false;
 
 
     GetWeather weatherAsync;
@@ -49,7 +49,6 @@ public class ScoreFragment extends Fragment {
     TextView numeroTrou, TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille;
     OpenWheatherMap openWheatherMap = new OpenWheatherMap();
     static double lat, lng;
-
 
 
     public ScoreFragment() {
@@ -81,17 +80,23 @@ public class ScoreFragment extends Fragment {
             }
         });
 
-
-        FloatingActionButton scoreMoins =(FloatingActionButton) view.findViewById(R.id.scoremoins);
-        scoreMoins.setOnClickListener(new View.OnClickListener(){
+        FloatingActionButton abandonTrou = (FloatingActionButton) view.findViewById(R.id.dismiss);
+        abandonTrou.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v){
-                changeScoreMoins(view);
+            public void onClick(View v) {
+                changeAbandonTrou(view);
             }
         });
 
+        FloatingActionButton scoreMoins = (FloatingActionButton) view.findViewById(R.id.scoremoins);
+        scoreMoins.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                changeScoreMoins(view);
+            }
+        });
 
 
         // edit the TextView and call the Location fonction to get the Location value and then get Weather data
@@ -106,34 +111,13 @@ public class ScoreFragment extends Fragment {
 
 
         numeroTrou = (TextView) view.findViewById(R.id.numeroTrou);
-        /*numeroTrou.addTextChangedListener(new TextWatcher() {
 
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                TrouChangeListener.TrouChangeListener(Integer.parseInt(numeroTrou.getText().toString()));
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-*/
         //get realm instance
         this.realm = RealmController.with(this).getRealm();
         return view;
     }
 
-    /*
-    public int getNum(){
-        return Integer.parseInt(numeroTrou.getText().toString());
-    }
-*/
+
     public void changeNextHole(View view) {
         TextView trouTextView = (TextView) view.findViewById(R.id.numeroTrou);
         TextView scoreTextView = (TextView) view.findViewById(R.id.score);
@@ -175,12 +159,19 @@ public class ScoreFragment extends Fragment {
 
     }
 
-    public void changeScoreMoins(View view){
-        TextView scoreTextView= (TextView) view.findViewById(R.id.score);
+    public void changeScoreMoins(View view) {
+        TextView scoreTextView = (TextView) view.findViewById(R.id.score);
         int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
-        if (scoreNumber!=0) {
+        if (scoreNumber != 0) {
             scoreTextView.setText("" + (scoreNumber - 1));
         }
+    }
+
+    public void changeAbandonTrou(View view) {
+        TextView scoreTextView = (TextView) view.findViewById(R.id.score);
+        int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
+        scoreTextView.setText("" + 9);
+        changeNextHole(view);
     }
 
     private void setRealmData(Integer Carte[]) {
@@ -214,8 +205,6 @@ public class ScoreFragment extends Fragment {
         partie.setScore17(Carte[16]);
         partie.setScore18(Carte[17]);
         partie.setScore("" + scoreTotal);
-        partie.setHandicap("10");
-        partie.setTrou("10");
         parties.add(partie);
 
 
@@ -277,9 +266,6 @@ public class ScoreFragment extends Fragment {
         }
     }
 
-
-
-
     private class GetWeather extends AsyncTask<String, Void, String> {
 
         TextView TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille;
@@ -335,8 +321,8 @@ public class ScoreFragment extends Fragment {
             openWheatherMap = gson.fromJson(s, myType); // we get all the data from the URL on a Gson Filz
 
             // We set all the data we needTxtVille.setText(String.valueOf(openWheatherMap.getName()));
-            TXtWindText.setText(String.valueOf(openWheatherMap.getWind().getSpeed())+"m/s");
-            TxtTextWindRose.setText(String.valueOf(openWheatherMap.getWind().getDeg()) +"°");
+            TXtWindText.setText(String.valueOf(openWheatherMap.getWind().getSpeed()) + "m/s");
+            TxtTextWindRose.setText(String.valueOf(openWheatherMap.getWind().getDeg()) + "°");
             TxtThermometerText.setText(String.format("%.1f °C", openWheatherMap.getMainWeather().getTemp() - 273, 15));
             TxtTextPressure.setText(String.valueOf(openWheatherMap.getMainWeather().getPressure()) + " hPa");
             TxtTextAtmospheric.setText(String.valueOf(openWheatherMap.getMainWeather().getHumidity()) + "%");
@@ -344,9 +330,9 @@ public class ScoreFragment extends Fragment {
         }
     }
 
-    public void setTextStart(Double latitude,Double longitude){
+    public void setTextStart(Double latitude, Double longitude) {
 
-        if(!weatherRetreive) {
+        if (!weatherRetreive) {
             weatherRetreive = true;
             this.lat = latitude;
             this.lng = longitude;
@@ -360,9 +346,6 @@ public class ScoreFragment extends Fragment {
 
 
     }
-
-
-
 
 
 }

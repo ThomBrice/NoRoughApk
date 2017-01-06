@@ -76,8 +76,11 @@ public class HistoryScoreFragment extends Fragment {
         for (int i = 0; i < 18; i++) {
             int trou = i + 1;
             trous.add("" + trou);
-            handicap.add(""+Handicap[i]);
-            score.add("" + Score[i]);
+            handicap.add("" + Handicap[i]);
+            if(Score[i]!=9) {
+                score.add("" + Score[i]);
+            }
+            else{score.add("X");}
         }
         RecyclerView.Adapter CarteAdapter = new CarteAdapter(trous, handicap, score);
         recycler.setAdapter(CarteAdapter);
