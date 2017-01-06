@@ -1,6 +1,7 @@
 package com.example.isen.noroughapk;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,8 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.isen.noroughapk.json_helper.JsonReader;
 import com.example.isen.noroughapk.Class.Player;
+import com.example.isen.noroughapk.json_helper.JsonReader;
 
 /**
  * Created by Thomas B on 30/11/2016.
@@ -53,53 +54,57 @@ public class AccountFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        player = new Player();
+
 
         listGolf =  (ListView) view.findViewById(R.id.list_golf);
         firstName = (EditText) view.findViewById(R.id.firstname);
         surName = (EditText) view.findViewById(R.id.surname);
         handicap = (EditText) view.findViewById(R.id.handicap);
 
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String TextfirstName= sharedPref.getString("FirstName","");
+        String TextSurname = sharedPref.getString("Surname","");
+        Float TextHandicap = sharedPref.getFloat("Handicap", 54.0f);
+
+
+
         bundle = this.getArguments();
         if(bundle !=null){
             jsonReader = bundle.getParcelable("nomsGolf");
-            player = bundle.getParcelable("Player");
+
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext()
                 ,android.R.layout.simple_expandable_list_item_1
                 ,jsonReader.getGolfNames());
+
+        firstName.setText(TextfirstName);
+        surName.setText(TextSurname);
+        handicap.setText(TextHandicap.toString());
+
         listGolf.setAdapter(adapter);
 
-        firstName.setText(player.getFirstname());
-        surName.setText(player.getSurname());
-        if(player.getHandicap() > -1.0){
-            handicap.setText(player.getHandicap().toString());}
-        listGolf.setSelection(player.getPositionGolf());
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        player = new Player();
 
-        if (listGolf.getSelectedItemPosition() > -1) {
-            player.setGolfDeReference(listGolf.getSelectedItem().toString());
-            player.setPositionGolf(listGolf.getSelectedItemPosition());
-        }
-        if (!firstName.getText().toString().equals("")) {
-            player.setFirstname(firstName.getText().toString());
-        }
-        if (!surName.getText().toString().equals("")) {
-            player.setSurname(surName.getText().toString());
-        }
-        if (!handicap.getText().toString().equals("")) {
-            player.setHandicap(Float.parseFloat(handicap.getText().toString()));
-        }
 
-        Intent intent = new Intent(getActivity(), NavigationDrawer.class);
-        intent.putExtra("PlayerFromFrag", player);
-        startActivity(intent);
+       String FirstName = firstName.getText().toString();
+        String Surname = surName.getText().toString();
+        Float  Handicap = Float.parseFloat(handicap.getText().toString());
+
+
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("FirstName", FirstName);
+        editor.putString("Surname", Surname);
+        editor.putFloat("Handicap",Handicap);
+        editor.commit();
+
 
     }
 }
