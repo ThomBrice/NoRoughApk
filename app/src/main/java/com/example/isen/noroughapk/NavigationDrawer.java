@@ -187,6 +187,10 @@ public class NavigationDrawer extends AppCompatActivity
                     .replace(R.id.content_main, accountFragment)
                     .commit();
         } else if (id == R.id.nav_appareillage) {
+                AppareillageFragment appareillageFragment = new AppareillageFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_main, appareillageFragment)
+                    .commit();
 
         }
 

@@ -18,6 +18,9 @@
         <uses-library android:name="com.google.android.maps" />
         <uses-feature android:name="android.hardware.location.gps" />
 
+        <uses-feature android:name="android.hardware.camera"
+            android:required="true" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

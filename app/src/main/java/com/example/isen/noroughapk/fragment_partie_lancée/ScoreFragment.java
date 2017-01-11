@@ -1,6 +1,8 @@
 package com.example.isen.noroughapk.fragment_partie_lancée;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -39,7 +41,9 @@ public class ScoreFragment extends Fragment {
     Integer[] ParGolfSart = new Integer[]{4, 3, 5, 4, 4, 4, 3, 4, 5, 4, 4, 3, 4, 4, 3, 4, 4, 5};
     Integer[] newScore = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-    int lecteurHandicap = 1, scoreTotal = 0, handicap = 18;
+    int lecteurHandicap = 1, scoreTotal = 0;
+
+
     TrouChangeListener TrouChangeListener;
     boolean weatherRetreive = false;
 
@@ -220,6 +224,10 @@ public class ScoreFragment extends Fragment {
     }
 
     public void setNewScore() {
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        Float TextHandicap = sharedPref.getFloat("Handicap", 54.0f);
+        int handicap =Math.round(TextHandicap) ;
         while (handicap != 0) {
 
             if (handicap <= 18) {
