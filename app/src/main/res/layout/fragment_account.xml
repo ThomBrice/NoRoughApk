@@ -9,7 +9,7 @@
         android:hint="Firstname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:background="@drawable/rectangle"
         android:maxLength="20"/>
 
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/firstname"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:background="@drawable/rectangle"
         android:maxLength="20"/>
 
@@ -30,20 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/surname"
         android:background="@drawable/rectangle"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:maxLength="5"
         android:inputType="numberDecimal"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/golfName"
-        android:textSize="20dp"
-        android:layout_margin="10dp"
-        android:textColor="@color/cardview_dark_background"
-        android:layout_below="@+id/handicap"
-        />
 
     <ImageView
         android:id="@+id/account_picture"
@@ -55,11 +44,11 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="5dp"/>
 
-    <ListView
+    <ExpandableListView
         android:id="@+id/list_golf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/golfName"
+        android:layout_below="@+id/handicap"
         android:choiceMode="singleChoice"
         android:listSelector="@color/colorPrimary"/>
 

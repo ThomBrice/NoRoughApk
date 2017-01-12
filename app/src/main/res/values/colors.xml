@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#46da32</color>
-    <color name="colorPrimaryDark">#04750a</color>
-    <color name="colorAccent">#2fcc72</color>
+    <color name="colorPrimary">#8BC34A</color>
+    <color name="colorPrimaryDark">#689F38</color>
+    <color name="colorAccent">#009688</color>
     <color name="ripples">#FFFF</color>
-    <color name="start_gradient">#fbf241</color>
+    <color name="start_gradient">#8BC34A</color>
     <color name="mid_gradient">#ffffff</color>
-    <color name="end_gradient">#d94444</color>
+    <color name="end_gradient">#689F38</color>
 </resources>
