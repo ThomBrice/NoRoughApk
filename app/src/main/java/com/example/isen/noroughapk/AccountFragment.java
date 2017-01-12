@@ -14,14 +14,12 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.isen.noroughapk.json_helper.JsonReader;
+import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -34,9 +32,10 @@ import static android.app.Activity.RESULT_OK;
 
 public class AccountFragment extends Fragment {
 
+    private ClickListenerFragment listenerFragment;
+
     public View view;
-    JsonReader jsonReader;
-    Bundle bundle;
+
 
     ListView listGolf;
     EditText firstName;
@@ -63,7 +62,7 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_account, container, false);
-
+        listenerFragment = (NavigationDrawer) this.getActivity();
         onResume();
 
         return view;
@@ -74,7 +73,7 @@ public class AccountFragment extends Fragment {
         super.onResume();
 
 
-        listGolf = (ListView) view.findViewById(R.id.list_golf);
+
         firstName = (EditText) view.findViewById(R.id.firstname);
         surName = (EditText) view.findViewById(R.id.surname);
         handicap = (EditText) view.findViewById(R.id.handicap);
@@ -98,27 +97,23 @@ public class AccountFragment extends Fragment {
         }
 
 
-        bundle = this.getArguments();
-        if (bundle != null) {
-            jsonReader = bundle.getParcelable("nomsGolf");
-
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext()
-                , android.R.layout.simple_expandable_list_item_1
-                , jsonReader.getGolfNames());
-        listGolf.setAdapter(adapter);
 
         if(golfName.equals("null")){}
         else{
-            golfNameView.setText("Licencié au " +golfName);
+            golfNameView.setText(golfName);
         }
 
         firstName.setText(TextfirstName);
         surName.setText(TextSurname);
         handicap.setText(TextHandicap.toString());
 
+        golfNameView.setOnClickListener(new View.OnClickListener() {
 
+            public void onClick(View view) {
+                listenerFragment.ClickListener("goToGetGolf");
+
+            }
+        });
 
         accountPicture.setOnClickListener(new View.OnClickListener() {
 
@@ -129,12 +124,7 @@ public class AccountFragment extends Fragment {
         });
 
 
-        listGolf.setOnItemClickListener(new AdapterView.OnItemClickListener() { // Listener de ma liste d'employés qui génère la récupération de l'employé cliqué, ainsi que l'activité seléctionné dans vueActivites
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                golfName = listGolf.getItemAtPosition(listGolf.getCheckedItemPosition()).toString();
 
-            }
-        });
 
     }
 
@@ -200,7 +190,6 @@ public class AccountFragment extends Fragment {
         editor.putString("FirstName", FirstName);
         editor.putString("Surname", Surname);
         editor.putFloat("Handicap", Handicap);
-        editor.putString("NomGolf", golfName);
         editor.commit();
 
 

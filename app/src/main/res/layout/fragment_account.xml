@@ -39,8 +39,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/golfName"
-        android:textSize="20dp"
-        android:layout_margin="10dp"
+        android:hint="Click to Change"
+        android:background="@drawable/rectangle"
+        android:layout_margin="20dp"
         android:textColor="@color/cardview_dark_background"
         android:layout_below="@+id/handicap"
         />
@@ -55,12 +56,6 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="5dp"/>
 
-    <ListView
-        android:id="@+id/list_golf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/golfName"
-        android:choiceMode="singleChoice"
-        android:listSelector="@color/colorPrimary"/>
+
 
 </RelativeLayout>

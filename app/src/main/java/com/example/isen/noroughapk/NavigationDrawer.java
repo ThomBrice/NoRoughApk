@@ -181,7 +181,6 @@ public class NavigationDrawer extends AppCompatActivity
         } else if (id == R.id.nav_mon_compte) {
             AccountFragment accountFragment = new AccountFragment();
             bundle.putParcelable("nomsGolf",jsonReader);
-            bundle.putParcelable("Player",player);
             accountFragment.setArguments(bundle);
             fragmentManager.beginTransaction()
                     .replace(R.id.content_main, accountFragment)
@@ -230,6 +229,22 @@ public class NavigationDrawer extends AppCompatActivity
                 HistoryFragment historyFragment = new HistoryFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_main, historyFragment)
+                        .commit();
+                break;
+
+            case "goToAccount":
+                AccountFragment accountFragment = new AccountFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_main, accountFragment)
+                        .commit();
+                break;
+
+            case "goToGetGolf":
+                GetGolf getGolf = new GetGolf();
+                bundle.putParcelable("jsonReader",jsonReader);
+                getGolf.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_main, getGolf)
                         .commit();
                 break;
             case "goToHistoryScoreFragment":
