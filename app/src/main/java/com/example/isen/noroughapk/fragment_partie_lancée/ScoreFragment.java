@@ -127,13 +127,15 @@ public class ScoreFragment extends Fragment {
         TextView scoreTextView = (TextView) view.findViewById(R.id.score);
         TextView parTextView = (TextView) view.findViewById(R.id.Par);
 
-        TrouChangeListener.TrouChangeListener(Integer.parseInt(numeroTrou.getText().toString()));
 
+        TrouChangeListener.TrouChangeListener(Integer.parseInt(numeroTrou.getText().toString()) - 1);
         int trouNumber = (Integer.parseInt(trouTextView.getText().toString()));
         if (trouNumber < 19) {
+
             int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
             Score[trouNumber - 1] = scoreNumber;
             if (trouNumber == 18) {
+
                 setRealmData(Score);
                 listenerFragment.ClickListener("goToHistory");
 
@@ -173,8 +175,7 @@ public class ScoreFragment extends Fragment {
 
     public void changeAbandonTrou(View view) {
         TextView scoreTextView = (TextView) view.findViewById(R.id.score);
-        int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
-        scoreTextView.setText("" + 9);
+        scoreTextView.setText("" + 10);
         changeNextHole(view);
     }
 
@@ -227,10 +228,22 @@ public class ScoreFragment extends Fragment {
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         Float TextHandicap = sharedPref.getFloat("Handicap", 54.0f);
-        int handicap =Math.round(TextHandicap) ;
+        int handicap = Math.round(TextHandicap);
         while (handicap != 0) {
+            if (handicap == 54) {
+                for (int i = 0; i < 18; i++) {
+                    newScore[i] = Score[i] - 3;
+                }
+                handicap = handicap - 54;
+            }
+            if (handicap >= 36) {
+                for (int i = 0; i < 18; i++) {
+                    newScore[i] = Score[i] - 2;
+                }
+                handicap = handicap - 36;
+            }
 
-            if (handicap <= 18) {
+            if (handicap >= 18) {
                 for (int i = 0; i < 18; i++) {
                     newScore[i] = Score[i] - 1;
                 }
@@ -241,6 +254,10 @@ public class ScoreFragment extends Fragment {
                         if (lecteurHandicap == Handicap[i]) {
                             newScore[i] = Score[i] - 1;
                             lecteurHandicap++;
+                            handicap=handicap-1;
+                            if (handicap==0){
+                                break;
+                            }
                         }
                     }
                 }
@@ -255,6 +272,12 @@ public class ScoreFragment extends Fragment {
                     break;
                 case 1:
                     scoreTotal += 1;
+                    break;
+                case 2:
+                    scoreTotal +=0;
+                    break;
+                case 3:
+                    scoreTotal +=0;
                     break;
                 case -1:
                     scoreTotal += 3;
@@ -272,6 +295,7 @@ public class ScoreFragment extends Fragment {
                     break;
             }
         }
+        scoreTotal +=0;
     }
 
     private class GetWeather extends AsyncTask<String, Void, String> {

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 
@@ -120,6 +121,20 @@ public class AccountFragment extends Fragment {
             public void onClick(View view) {
                 dispatchTakePictureIntent();
 
+            }
+        });
+
+        handicap.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                if(Float.parseFloat(handicap.getText().toString())>54 ){
+                    Toast.makeText(getActivity(), "Handicap maximum : 54", Toast.LENGTH_SHORT).show();
+                    handicap.setText("54.0");
+                }
+                if(Float.parseFloat(handicap.getText().toString())<0 ){
+                    Toast.makeText(getActivity(), "Handicap minimum : 0", Toast.LENGTH_SHORT).show();
+                    handicap.setText("0.0");
+                }
             }
         });
 

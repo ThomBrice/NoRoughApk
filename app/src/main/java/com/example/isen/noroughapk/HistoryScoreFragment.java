@@ -77,7 +77,7 @@ public class HistoryScoreFragment extends Fragment {
             int trou = i + 1;
             trous.add("" + trou);
             handicap.add("" + Handicap[i]);
-            if(Score[i]!=9) {
+            if(Score[i]!=10) {
                 score.add("" + Score[i]);
             }
             else{score.add("X");}
