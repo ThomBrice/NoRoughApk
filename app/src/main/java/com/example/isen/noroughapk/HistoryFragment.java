@@ -20,6 +20,7 @@ import io.realm.RealmResults;
 public class HistoryFragment extends Fragment {
 
 
+
     private PartiesAdapter adapter;
     private Realm realm;
     private RecyclerView recycler;
@@ -27,7 +28,7 @@ public class HistoryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentHistoryView = inflater.inflate(R.layout.fragment_history, container, false);
+        final View fragmentHistoryView = inflater.inflate(R.layout.fragment_history, container, false);
 
         recycler = (RecyclerView) fragmentHistoryView.findViewById(R.id.recyclerHistory);
         this.realm = RealmController.with(this).getRealm();
@@ -35,7 +36,6 @@ public class HistoryFragment extends Fragment {
         setupRecycler();
         RealmController.with(this).refresh();
        setRealmAdapter(RealmController.with(this).getBooks());
-
 
 
         return fragmentHistoryView;

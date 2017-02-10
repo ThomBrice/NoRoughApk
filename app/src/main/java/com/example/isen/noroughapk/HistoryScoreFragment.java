@@ -25,6 +25,7 @@ public class HistoryScoreFragment extends Fragment {
     private RecyclerView recycler;
     private Realm realm;
 
+
     Integer[] Score = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     Integer[] Handicap = new Integer[]{7, 3, 15, 11, 1, 9, 17, 13, 5, 8, 4, 16, 14, 2, 18, 10, 6, 12};
 
@@ -77,12 +78,12 @@ public class HistoryScoreFragment extends Fragment {
             int trou = i + 1;
             trous.add("" + trou);
             handicap.add("" + Handicap[i]);
-            if(Score[i]!=9) {
+            if(Score[i]!=10) {
                 score.add("" + Score[i]);
             }
             else{score.add("X");}
         }
-        RecyclerView.Adapter CarteAdapter = new CarteAdapter(trous, handicap, score);
+        RecyclerView.Adapter CarteAdapter = new CarteAdapter(trous, handicap,score, (NavigationDrawer) this.getActivity());
         recycler.setAdapter(CarteAdapter);
 
 

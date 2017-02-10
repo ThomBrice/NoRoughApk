@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 
@@ -27,7 +27,7 @@ import java.io.File;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * Created by Thomas B on 30/11/2016.
+ * Created by Thaddée Klein on 30/11/2016.
  */
 
 public class AccountFragment extends Fragment {
@@ -36,8 +36,6 @@ public class AccountFragment extends Fragment {
 
     public View view;
 
-
-    ListView listGolf;
     EditText firstName;
     EditText surName;
     ImageView accountPicture;
@@ -46,7 +44,6 @@ public class AccountFragment extends Fragment {
 
     String golfName;
 
-    static final int REQUEST_TAKE_PHOTO = 1;
 
     public AccountFragment() {
 
@@ -120,6 +117,20 @@ public class AccountFragment extends Fragment {
             public void onClick(View view) {
                 dispatchTakePictureIntent();
 
+            }
+        });
+
+        handicap.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                if(Float.parseFloat(handicap.getText().toString())>54 ){
+                    Toast.makeText(getActivity(), "Handicap maximum : 54", Toast.LENGTH_SHORT).show();
+                    handicap.setText("54.0");
+                }
+                if(Float.parseFloat(handicap.getText().toString())<0 ){
+                    Toast.makeText(getActivity(), "Handicap minimum : 0", Toast.LENGTH_SHORT).show();
+                    handicap.setText("0.0");
+                }
             }
         });
 
