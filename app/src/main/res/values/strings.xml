@@ -4,9 +4,16 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="consumer_key_twitter">Xabewxxtzl9FIh17hUcfoNB4w</string>
+    <string name="consumer_secret_twitter">Uom7vCdDEypbHvFiXBQldMNwaGneQJ8axbMAi2NlH8YDDjmvRG</string>
     <string name="action_settings">Settings</string>
 
+    <string name="twitter_callback">http://javatechig.android.app</string>
+    <string name="twitter_consumer_key">YOUR_CONSUMER_KEY_HERE</string>
+    <string name="twitter_consumer_secret">YOUR_CONSUMER_SECRET_HERE</string>
+    <string name="twitter_oauth_verifier">oauth_verifier</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
     <string name="unknown_characteristic">Unknown characteristic</string>
@@ -31,5 +38,7 @@
     <string name="w56">Wedge 56°</string>
     <string name="w60">Wedge 60°</string>
     <string name="w64">Wedge 64°</string>
+
+
 
 </resources>

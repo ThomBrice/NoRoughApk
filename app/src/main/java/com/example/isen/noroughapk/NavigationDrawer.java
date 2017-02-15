@@ -194,8 +194,6 @@ public class NavigationDrawer extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.content_main, analyseFragment)
                     .commit();
-        } else if (id == R.id.nav_amis) {
-
         } else if (id == R.id.nav_mon_compte) {
             AccountFragment accountFragment = new AccountFragment();
             bundle.putParcelable("nomsGolf",jsonReader);
@@ -248,6 +246,33 @@ public class NavigationDrawer extends AppCompatActivity
                         .replace(R.id.content_main, historyFragment)
                         .commit();
                 break;
+
+            case "goToAccount":
+                AccountFragment accountFragment = new AccountFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_main, accountFragment)
+                        .commit();
+                break;
+
+            case "goToGetGolf":
+                GetGolf getGolf = new GetGolf();
+                bundle.putParcelable("jsonReader",jsonReader);
+                getGolf.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_main, getGolf)
+                        .commit();
+                break;
+
+            case"chooseGolf":
+                ChooseGolfFragment chooseGolfFragment = new ChooseGolfFragment();
+                bundle.putParcelable("jsonReader",jsonReader);
+                bundle.putParcelable("nomsGolf",jsonReader);
+                chooseGolfFragment.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_main, chooseGolfFragment)
+                        .commit();
+                break;
+
             case "goToHistoryScoreFragment":
 
                 HistoryScoreFragment historyScoreFragment = new HistoryScoreFragment();
@@ -260,9 +285,32 @@ public class NavigationDrawer extends AppCompatActivity
                         .commit();
                 break;
 
+
+
+
+
             default:
                 break;
 
+        }
+    }
+
+    @Override
+    public  void ClickListener(String name ,int from , int score,int position){
+        switch (name){
+            case "sharePartie":
+                AmisFragment amisFragment = new AmisFragment();
+                bundle.putInt("from", from);
+                bundle.putInt("position", position);
+                bundle.putInt("score", score);
+
+
+                amisFragment.setArguments(bundle);
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_main,amisFragment)
+                        .commit();
+                break;
         }
     }
 
@@ -279,6 +327,8 @@ public class NavigationDrawer extends AppCompatActivity
                         .replace(R.id.content_main,historyScoreFragment)
                         .commit();
                 break;
+
+
             default:
                 break;
         }

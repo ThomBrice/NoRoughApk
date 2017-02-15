@@ -49,7 +49,7 @@ public class ScoreFragment extends Fragment {
     Integer[] Handicap = new Integer[]{7, 3, 15, 11, 1, 9, 17, 13, 5, 8, 4, 16, 14, 2, 18, 10, 6, 12};
     Integer[] ParGolfSart = new Integer[]{4, 3, 5, 4, 4, 4, 3, 4, 5, 4, 4, 3, 4, 4, 3, 4, 4, 5};
     Integer[] newScore = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
+    String meteoIcon;
     int lecteurHandicap = 1, scoreTotal = 0;
 
 
@@ -149,15 +149,16 @@ public class ScoreFragment extends Fragment {
         TextView scoreTextView = (TextView) view.findViewById(R.id.score);
         TextView parTextView = (TextView) view.findViewById(R.id.Par);
 
-        TrouChangeListener.TrouChangeListener(Integer.parseInt(numeroTrou.getText().toString()));
 
         int trouNumber = (Integer.parseInt(numeroTrou.getText().toString()));
         if (trouNumber < 19) {
+
             int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
             Score[trouNumber - 1] = scoreNumber;
             if (trouNumber == 18) {
+
                 setRealmData(Score);
-                listenerFragment.ClickListener("goToHistory");
+                listenerFragment.ClickListener("sharePartie",1,scoreTotal,0);
 
 
             } else {
@@ -195,8 +196,7 @@ public class ScoreFragment extends Fragment {
 
     public void changeAbandonTrou(View view) {
         TextView scoreTextView = (TextView) view.findViewById(R.id.score);
-        int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
-        scoreTextView.setText("" + 9);
+        scoreTextView.setText("" + 10);
         changeNextHole(view);
     }
 
@@ -209,7 +209,11 @@ public class ScoreFragment extends Fragment {
         Partie partie = new Partie();
         setNewScore();
 
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String golfName = sharedPref.getString("GolfPartie", "");
 
+        partie.setMeteoIcon(meteoIcon);
+        partie.setParcour(golfName);
         partie.setId((int) (id));
         partie.setDatePartie("" + date);
         partie.setScore1(Carte[0]);
@@ -249,10 +253,22 @@ public class ScoreFragment extends Fragment {
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         Float TextHandicap = sharedPref.getFloat("Handicap", 54.0f);
-        int handicap =Math.round(TextHandicap) ;
+        int handicap = Math.round(TextHandicap);
         while (handicap != 0) {
+            if (handicap == 54) {
+                for (int i = 0; i < 18; i++) {
+                    newScore[i] = Score[i] - 3;
+                }
+                handicap = handicap - 54;
+            }
+            if (handicap >= 36) {
+                for (int i = 0; i < 18; i++) {
+                    newScore[i] = Score[i] - 2;
+                }
+                handicap = handicap - 36;
+            }
 
-            if (handicap <= 18) {
+            if (handicap >= 18) {
                 for (int i = 0; i < 18; i++) {
                     newScore[i] = Score[i] - 1;
                 }
@@ -263,6 +279,10 @@ public class ScoreFragment extends Fragment {
                         if (lecteurHandicap == Handicap[i]) {
                             newScore[i] = Score[i] - 1;
                             lecteurHandicap++;
+                            handicap=handicap-1;
+                            if (handicap==0){
+                                break;
+                            }
                         }
                     }
                 }
@@ -277,6 +297,12 @@ public class ScoreFragment extends Fragment {
                     break;
                 case 1:
                     scoreTotal += 1;
+                    break;
+                case 2:
+                    scoreTotal +=0;
+                    break;
+                case 3:
+                    scoreTotal +=0;
                     break;
                 case -1:
                     scoreTotal += 3;
@@ -294,6 +320,7 @@ public class ScoreFragment extends Fragment {
                     break;
             }
         }
+        scoreTotal +=0;
     }
 
     private class GetWeather extends AsyncTask<String, Void, String> {
@@ -357,6 +384,7 @@ public class ScoreFragment extends Fragment {
             TxtTextPressure.setText(String.valueOf(openWheatherMap.getMainWeather().getPressure()) + " hPa");
             TxtTextAtmospheric.setText(String.valueOf(openWheatherMap.getMainWeather().getHumidity()) + "%");
             TxtVille.setText(String.valueOf(openWheatherMap.getName()));
+            meteoIcon = String.valueOf(openWheatherMap.getWeather().get(0).getMain());
         }
     }
 
