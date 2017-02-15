@@ -19,10 +19,6 @@
             android:icon="@drawable/ic_menu_swing"
             android:title="Analyse swing" />
         <item
-            android:id="@+id/nav_amis"
-            android:icon="@drawable/ic_menu_amis"
-            android:title="Amis" />
-        <item
             android:id="@+id/nav_mon_compte"
             android:icon="@drawable/ic_menu_mon_compte"
             android:title="Mon compte" />

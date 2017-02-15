@@ -29,7 +29,7 @@ public class StartFragment extends Fragment {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listenerFragment.ClickListener("play");
+                listenerFragment.ClickListener("chooseGolf");
             }
         });
 

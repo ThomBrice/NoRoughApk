@@ -8,6 +8,7 @@ public interface ClickListenerFragment {
     public void ClickListener(String name);
 
     public void ClickListener(String name, int id);
+    public void ClickListener(String name ,int from , int position,int score);
 
     public void ClickListener(String name, String data);
 

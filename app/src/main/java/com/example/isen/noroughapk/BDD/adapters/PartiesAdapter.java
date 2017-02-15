@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.isen.noroughapk.BDD.model.Partie;
@@ -20,13 +21,11 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 
-
 public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
     final Context context;
     private Realm realm;
     private LayoutInflater inflater;
     private ClickListenerFragment listenerFragment;
-
 
     public PartiesAdapter(Context context) {
 
@@ -39,14 +38,15 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // inflate a new card view
         listenerFragment = (NavigationDrawer) this.context;
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parties, parent, false);
-        return new CardViewHolder(view);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parties, parent, false);
+         return new CardViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
         realm = RealmController.getInstance().getRealm();
         // get the article
+
 
         final Partie partie = getItem(position);
         // cast the generic view holder to our specific one
@@ -55,6 +55,36 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
         // set the title and the snippet
         holder.textDatePartie.setText(partie.getDatePartie());
         holder.textScore.setText(partie.getScore());
+        String GolfName = partie.getParcour();
+
+
+        switch (GetIntGolf(GolfName)){
+            case 1: // golf du sart
+                holder.GolfIcone.setImageResource(R.drawable.golfsarticone);
+            break;
+
+            case 2:  // golf de Valenciennes
+                holder.GolfIcone.setImageResource(R.drawable.golfvalenciennesicone);
+                break;
+
+            default:
+                holder.GolfIcone.setImageResource(R.drawable.depart);
+        }
+
+        String MeteoIcon = partie.getMeteoIcon();
+        switch(GetIntMeteo(MeteoIcon)){
+            case 1: // Clouds
+                holder.MeteoIcone.setImageResource(R.drawable.cloudweather);
+                break;
+
+            case 2: //sun
+                holder.MeteoIcone.setImageResource(R.drawable.sunweahter);
+                break;
+
+            default:
+                holder.MeteoIcone.setImageResource(R.drawable.build);
+        }
+
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +154,8 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
         public CardView card;
         public TextView textDatePartie;
         public TextView textScore;
+        public ImageView GolfIcone;
+        public ImageView MeteoIcone;
 
         public CardViewHolder(View itemView) {
             // standard view holder pattern with Butterknife view injection
@@ -131,9 +163,41 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
             card = (CardView) itemView.findViewById(R.id.card_parties);
             textDatePartie = (TextView) itemView.findViewById(R.id.date_partie);
             textScore =(TextView) itemView.findViewById(R.id.scoreTotal);
+            GolfIcone =(ImageView) itemView.findViewById(R.id.GolfIcone);
+            MeteoIcone = (ImageView) itemView.findViewById(R.id.meteoIcone);
+
+
 
 
         }
+    }
+
+    public int GetIntGolf(String golfName){
+        int IntGolf=0;
+
+        if (golfName.equals("Golf du Sart")){
+            IntGolf=1;
+        }
+
+        if (golfName.equals("Golf de Valenciennes")){
+            IntGolf=2;
+        }
+
+        return IntGolf;
+    }
+
+    public int GetIntMeteo(String meteoIcon){
+        int IntMeteo=0;
+
+        if (meteoIcon.equals("Clouds")){
+            IntMeteo=1;
+        }
+
+        if(meteoIcon.equals("Suns")){
+            IntMeteo=2;
+        }
+
+        return IntMeteo;
     }
 
 
