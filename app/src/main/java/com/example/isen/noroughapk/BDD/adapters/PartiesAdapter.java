@@ -75,10 +75,10 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
         switch(GetIntMeteo(MeteoIcon)){
             case 1: // Clouds
                 holder.MeteoIcone.setImageResource(R.drawable.cloudweather);
-                break;
+               break;
 
             case 2: //sun
-                holder.MeteoIcone.setImageResource(R.drawable.sunweahter);
+                holder.MeteoIcone.setImageResource(R.drawable.sunweather);
                 break;
 
             default:
