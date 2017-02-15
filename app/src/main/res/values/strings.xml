@@ -7,6 +7,29 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="unknown_characteristic">Unknown characteristic</string>
+    <string name="unknown_service">Unknown service</string>
+    <string name="bois_1">Bois 1</string>
+    <string name="bois_2">Bois 2</string>
+    <string name="bois_3">Bois 3</string>
+    <string name="bois_4">Bois 4</string>
+    <string name="bois_5">Bois 5</string>
+    <string name="fer_1">Fer 1</string>
+    <string name="fer_2">Fer 2</string>
+    <string name="fer_3">Fer 3</string>
+    <string name="fer_4">Fer 4</string>
+    <string name="fer_5">Fer 5</string>
+    <string name="fer_6">Fer 6</string>
+    <string name="fer_7">Fer 7</string>
+    <string name="fer_8">Fer 8</string>
+    <string name="fer_9">Fer 9</string>
+    <string name="chipper">Chipper 1</string>
+    <string name="w48">Wedge 48°</string>
+    <string name="w52">Wedge 52°</string>
+    <string name="w56">Wedge 56°</string>
+    <string name="w60">Wedge 60°</string>
+    <string name="w64">Wedge 64°</string>
 
 </resources>

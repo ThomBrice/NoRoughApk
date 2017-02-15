@@ -43,6 +43,7 @@ public class ActivityFragment extends Fragment{
     private Double latitude;
     private Double longitude;
     private ScoreFragment scoreFragment;
+    private MapsFragment mapsFragment;
 
     public ActivityFragment() {
     }
@@ -54,6 +55,7 @@ public class ActivityFragment extends Fragment{
         View result = inflater.inflate(R.layout.fragment_activity, container, false);
 
         scoreFragment = new ScoreFragment();
+        mapsFragment = new MapsFragment();
 
         viewPager = (ViewPager) result.findViewById(R.id.viewpager_activité);
         setupViewPager(viewPager);
@@ -69,11 +71,12 @@ public class ActivityFragment extends Fragment{
         if(bundle !=null){
             jsonReader = bundle.getParcelable("jsonReader");
         }
-
-        num=1;
-        //trou = jsonReader.getCoordonneesList().get(num);
+        bundle.putParcelable("jsonReader",jsonReader);
+        mapsFragment.setArguments(bundle);
 
         calculDistances = new CalculDistances();
+
+        num=0;
 
         return result;
     }
@@ -81,7 +84,7 @@ public class ActivityFragment extends Fragment{
     public void setupViewPager(ViewPager upViewPager) {
         // Defines the number of tabs by setting appropriate fragment and tab name.
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new MapsFragment(), "Maps");
+        adapter.addFragment(mapsFragment, "Maps");
         adapter.addFragment(scoreFragment, "Score");
         viewPager.setAdapter(adapter);
     }
@@ -138,7 +141,6 @@ public class ActivityFragment extends Fragment{
             calculDistances.execute();
         }
     }
-
 
     public class CalculDistances extends AsyncTask<Double,Integer,Double> {
 

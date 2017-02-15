@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
-    android:padding="5dp"
-    android:weightSum="1">
+    android:id="@+id/scoreFragment">
 
 
     <android.support.v7.widget.CardView
@@ -13,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardCornerRadius="@dimen/corner_size">
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -109,7 +107,7 @@
                     android:clickable="true"
                     app:backgroundTint="@color/colorPrimaryDark"
                     app:rippleColor="@color/ripples"
-                    app:srcCompat="@drawable/ic_golf_course_white_24dp" />
+                    android:src="@drawable/ic_golf_course_white_24dp" />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/scorePlus"
@@ -120,7 +118,7 @@
 
                     app:backgroundTint="@color/colorPrimaryDark"
                     app:rippleColor="@color/ripples"
-                    app:srcCompat="@android:drawable/ic_media_next"
+                    android:src="@android:drawable/ic_media_next"
 
                     />
 
@@ -133,7 +131,7 @@
                     android:clickable="true"
                     app:backgroundTint="@color/colorPrimaryDark"
                     app:rippleColor="@color/ripples"
-                    app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+                    android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
 
             </LinearLayout>
@@ -141,8 +139,33 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
+    <include layout="@layout/fragment_weather"
+        android:id="@+id/weather">
+    </include>
 
-    <include layout="@layout/fragment_weather"></include>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/weather">
 
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/textClub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Club : "
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:id="@+id/club"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_toRightOf="@+id/textClub"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

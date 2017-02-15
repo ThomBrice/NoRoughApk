@@ -41,15 +41,24 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rectangle"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_margin="5dp"/>
 
-    <ExpandableListView
+    <ListView
         android:id="@+id/list_golf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/handicap"
         android:choiceMode="singleChoice"
         android:listSelector="@color/colorPrimary"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:layout_alignBottom="@+id/handicap"
+        android:layout_toRightOf="@+id/firstname"
+        android:layout_toEndOf="@+id/firstname"
+        android:id="@+id/editText" />
 
 </RelativeLayout>

@@ -6,6 +6,11 @@ package com.example.isen.noroughapk.Interfaces;
 
 public interface ClickListenerFragment {
     public void ClickListener(String name);
+
     public void ClickListener(String name, int id);
+
+    public void ClickListener(String name, String data);
+
+    public void BluetoothDeviceSet(String name, String address);
 }
 

@@ -1,19 +1,25 @@
 package com.example.isen.noroughapk.fragment_partie_lancée;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.isen.noroughapk.BDD.model.Partie;
 import com.example.isen.noroughapk.BDD.realm.RealmController;
+import com.example.isen.noroughapk.Bluetooth.BluetoothLeService;
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 import com.example.isen.noroughapk.Interfaces.TrouChangeListener;
 import com.example.isen.noroughapk.NavigationDrawer;
@@ -32,8 +38,11 @@ import java.util.Calendar;
 
 import io.realm.Realm;
 
+import static android.R.attr.action;
+
 
 public class ScoreFragment extends Fragment {
+
     private Realm realm;
     private ClickListenerFragment listenerFragment;
     Integer[] Score = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -50,10 +59,10 @@ public class ScoreFragment extends Fragment {
 
     GetWeather weatherAsync;
 
-    TextView numeroTrou, TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille;
+    TextView numeroTrou, TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille, TxtClub;
     OpenWheatherMap openWheatherMap = new OpenWheatherMap();
+    FloatingActionButton scorePlus;
     static double lat, lng;
-
 
     public ScoreFragment() {
     }
@@ -75,7 +84,7 @@ public class ScoreFragment extends Fragment {
             }
         });
 
-        FloatingActionButton scorePlus = (FloatingActionButton) view.findViewById(R.id.scorePlus);
+        scorePlus = (FloatingActionButton) view.findViewById(R.id.scorePlus);
         scorePlus.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -110,6 +119,8 @@ public class ScoreFragment extends Fragment {
         TxtTextPressure = (TextView) view.findViewById(R.id.TextPressure);
         TxtTextAtmospheric = (TextView) view.findViewById(R.id.TextAtmospheric);
         TxtVille = (TextView) view.findViewById(R.id.TextVille);
+        TxtClub = (TextView) view.findViewById(R.id.club);
+
 
         weatherAsync = new GetWeather(TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille);
 
@@ -118,18 +129,29 @@ public class ScoreFragment extends Fragment {
 
         //get realm instance
         this.realm = RealmController.with(this).getRealm();
+
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(mGattUpdateReceiver);
+    }
 
     public void changeNextHole(View view) {
-        TextView trouTextView = (TextView) view.findViewById(R.id.numeroTrou);
         TextView scoreTextView = (TextView) view.findViewById(R.id.score);
         TextView parTextView = (TextView) view.findViewById(R.id.Par);
 
         TrouChangeListener.TrouChangeListener(Integer.parseInt(numeroTrou.getText().toString()));
 
-        int trouNumber = (Integer.parseInt(trouTextView.getText().toString()));
+        int trouNumber = (Integer.parseInt(numeroTrou.getText().toString()));
         if (trouNumber < 19) {
             int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
             Score[trouNumber - 1] = scoreNumber;
@@ -143,7 +165,7 @@ public class ScoreFragment extends Fragment {
 
                 int parNumber = (ParGolfSart[trouNumber]);
 
-                trouTextView.setText("" + (trouNumber + 1));
+                numeroTrou.setText("" + (trouNumber + 1));
                 scoreTextView.setText("0");
                 parTextView.setText("" + parNumber);
             }
@@ -339,7 +361,6 @@ public class ScoreFragment extends Fragment {
     }
 
     public void setTextStart(Double latitude, Double longitude) {
-
         if (!weatherRetreive) {
             weatherRetreive = true;
             this.lat = latitude;
@@ -355,6 +376,91 @@ public class ScoreFragment extends Fragment {
 
     }
 
+    private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if (BluetoothLeService.ACTION_DATA_VERIFIED.equals(action)) {
+                displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+            }
+        }
+    };
+
+    private static IntentFilter makeGattUpdateIntentFilter() {
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothLeService.ACTION_DATA_VERIFIED);
+        return intentFilter;
+    }
+
+    private void displayData(String data){
+        switch (data){
+            case "1:0/":
+                TxtClub.setText(R.string.bois_1);
+                break;
+            case "1:1/":
+                TxtClub.setText(R.string.bois_2);
+                break;
+            case "1:2/":
+                TxtClub.setText(R.string.bois_3);
+                break;
+            case "1:3/":
+                TxtClub.setText(R.string.bois_4);
+                break;
+            case "1:4/":
+                TxtClub.setText(R.string.bois_5);
+                break;
+            case "1:5/":
+                TxtClub.setText(R.string.fer_1);
+                break;
+            case "1:6/":
+                TxtClub.setText(R.string.fer_2);
+                break;
+            case "1:7/":
+                TxtClub.setText(R.string.fer_3);
+                break;
+            case "1:8/":
+                TxtClub.setText(R.string.fer_4);
+                break;
+            case "1:9/":
+                TxtClub.setText(R.string.fer_5);
+                break;
+            case "1:10/":
+                TxtClub.setText(R.string.fer_6);
+                break;
+            case "1:11/":
+                TxtClub.setText(R.string.fer_7);
+                break;
+            case "1:12/":
+                TxtClub.setText(R.string.fer_8);
+                break;
+            case "1:13/":
+                TxtClub.setText(R.string.fer_9);
+                break;
+            case "1:14/":
+                TxtClub.setText(R.string.chipper);
+                break;
+            case "1:15/":
+                TxtClub.setText(R.string.w48);
+                break;
+            case "1:16/":
+                TxtClub.setText(R.string.w52);
+                break;
+            case "1:17/":
+                TxtClub.setText(R.string.w56);
+                break;
+            case "1:18/":
+                TxtClub.setText(R.string.w60);
+                break;
+            case "1:19/":
+                TxtClub.setText(R.string.w64);
+                break;
+            case "2:0/":
+                scorePlus.performClick();
+                break;
+            default:
+                break;
+        }
+    }
 
 }
 

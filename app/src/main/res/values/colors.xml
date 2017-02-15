@@ -2,9 +2,10 @@
 <resources>
     <color name="colorPrimary">#8BC34A</color>
     <color name="colorPrimaryDark">#689F38</color>
-    <color name="colorAccent">#009688</color>
+    <color name="colorAccent">#795548</color>
     <color name="ripples">#FFFF</color>
     <color name="start_gradient">#8BC34A</color>
     <color name="mid_gradient">#ffffff</color>
     <color name="end_gradient">#689F38</color>
+    <color name="circle_map">#9b000000</color>
 </resources>
