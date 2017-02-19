@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#8BC34A</color>
-    <color name="colorPrimaryDark">#689F38</color>
-    <color name="colorAccent">#795548</color>
-    <color name="ripples">#FFFF</color>
-    <color name="start_gradient">#8BC34A</color>
-    <color name="mid_gradient">#ffffff</color>
-    <color name="end_gradient">#689F38</color>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#388E3C</color>
+    <color name="colorAccent">#ffffff</color>
+    <color name="ripples">#e4e4e4</color>
+    <color name="colorBackground">#d5d9d6</color>
+    <color name="start_gradient">#4CAF50</color>
+    <color name="mid_gradient">#009688</color>
+    <color name="end_gradient">#4CAF50</color>
     <color name="circle_map">#9b000000</color>
+    <color name="logo">#388E3C</color>
 </resources>

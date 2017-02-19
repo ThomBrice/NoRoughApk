@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.isen.noroughapk.json_helper.JsonReader;
@@ -103,7 +104,7 @@ public class AccountFragment extends Fragment {
         firstName = (EditText) view.findViewById(R.id.firstname);
         surName = (EditText) view.findViewById(R.id.surname);
         handicap = (EditText) view.findViewById(R.id.handicap);
-        accountPicture = (ImageView) view.findViewById(R.id.account_picture);
+        //accountPicture = (ImageView) view.findViewById(R.id.account_picture);
         golfNameView = (TextView) view.findViewById(R.id.golfName);
 
 
@@ -111,17 +112,18 @@ public class AccountFragment extends Fragment {
         String TextfirstName = sharedPref.getString("FirstName", "");
         String TextSurname = sharedPref.getString("Surname", "");
         Float TextHandicap = sharedPref.getFloat("Handicap", 54.0f);
-        String PictureBase64 = sharedPref.getString("AccountPicture", "null");
+        //String PictureBase64 = sharedPref.getString("AccountPicture", "null");
         golfName = sharedPref.getString("NomGolf","null");
 
-
+        /* récupération de la photo prise par l'utilisateur
         if (PictureBase64.equals("null")) {
-            accountPicture.setImageResource(R.drawable.golf_player);
+            accountPicture.setImageResource(R.drawable.player);
         } else {
+
             Bitmap profil = decodeToBase64(PictureBase64);
             accountPicture.setImageBitmap(Bitmap.createScaledBitmap(profil, profil.getWidth() / 10, profil.getHeight() / 10, false));
         }
-
+        */
 
 
         if(golfName.equals("null")){}
@@ -141,6 +143,7 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        /* l'utilisateur prend une photo
         accountPicture.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -148,6 +151,7 @@ public class AccountFragment extends Fragment {
 
             }
         });
+        */
 
         handicap.setOnClickListener(new View.OnClickListener() {
 
@@ -168,6 +172,7 @@ public class AccountFragment extends Fragment {
 
     }
 
+    /* procédures nécessaire à la prise d'une photo depuis l'application
     private void dispatchTakePictureIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
@@ -214,6 +219,7 @@ public class AccountFragment extends Fragment {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
+    */
 
     @Override
     public void onPause() {

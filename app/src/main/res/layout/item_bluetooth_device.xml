@@ -3,20 +3,23 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/colorBackground">
 
     <TextView
         android:id="@+id/device_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="22sp"/>
+        android:textSize="22sp"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <TextView
         android:id="@+id/device_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/device_name"
-        android:layout_margin="3dp"/>
+        android:layout_margin="3dp"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <View
         android:layout_width="match_parent"

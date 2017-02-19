@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
     <EditText
         android:id="@+id/firstname"
@@ -10,30 +11,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
         android:background="@drawable/rectangle"
-        android:maxLength="20"/>
+        android:maxLength="20"
+        android:layout_below="@+id/account_picture"/>
 
-    <EditText
-        android:id="@+id/surname"
-        android:hint="Surname"
+
+    <ImageView
+        android:id="@+id/account_picture"
+        android:src="@drawable/user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/firstname"
-        android:layout_margin="20dp"
         android:background="@drawable/rectangle"
-        android:maxLength="20"/>
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"/>
 
     <EditText
         android:id="@+id/handicap"
         android:hint="Handicap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/surname"
         android:background="@drawable/rectangle"
-        android:layout_margin="20dp"
         android:maxLength="5"
-        android:inputType="numberDecimal"/>
-
+        android:inputType="numberDecimal"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/surname"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,21 +44,22 @@
         android:id="@+id/golfName"
         android:hint="Click to Change"
         android:background="@drawable/rectangle"
-        android:layout_margin="20dp"
         android:textColor="@color/cardview_dark_background"
+        android:layout_margin="5dp"
         android:layout_below="@+id/handicap"
-        />
+        android:layout_centerHorizontal="true" />
 
-    <ImageView
-        android:id="@+id/account_picture"
-        android:src="@drawable/golf_player"
+    <EditText
+        android:id="@+id/surname"
+        android:hint="Surname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/rectangle"
-        android:layout_alignParentTop="true"
+        android:maxLength="20"
         android:layout_alignParentEnd="true"
-        android:layout_margin="5dp"/>
-
+        android:layout_marginRight="20dp"
+        android:layout_alignBaseline="@+id/firstname"
+        android:layout_alignBottom="@+id/firstname"/>
 
 
 </RelativeLayout>

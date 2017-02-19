@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_menu_histogramme"
             android:title="Historique" />
         <item
-            android:id="@+id/nav_statistique"
+            android:id="@+id/nav_statistiques"
             android:icon="@drawable/ic_menu_statistique"
-            android:title="Statistique" />
+            android:title="Statistiques" />
         <item
             android:id="@+id/nav_swing"
             android:icon="@drawable/ic_menu_swing"

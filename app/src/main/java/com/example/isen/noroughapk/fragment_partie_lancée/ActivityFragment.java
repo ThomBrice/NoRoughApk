@@ -183,9 +183,9 @@ public class ActivityFragment extends Fragment{
         @Override
         protected void onPostExecute(Double aDouble) {
             super.onPostExecute(aDouble);
-            startGreen.setText(String.format("%1$.2f", valeurs[0]));
-            midGreen.setText(String.format("%1$.2f", valeurs[1]));
-            endGreen.setText(String.format("%1$.2f", valeurs[2]));
+            startGreen.setText(String.format("%1$.2f", valeurs[0] + "m"));
+            midGreen.setText(String.format("%1$.2f", valeurs[1] + "m"));
+            endGreen.setText(String.format("%1$.2f", valeurs[2] + "m"));
         }
 
         public void Calcul() {

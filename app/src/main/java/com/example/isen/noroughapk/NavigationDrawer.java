@@ -65,6 +65,7 @@ public class NavigationDrawer extends AppCompatActivity
     private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 1;
     private boolean doubleBackToExitPressedOnce = false;
     private static int PARTY_LAUNCH = 0;
+    private Toolbar toolbar;
 
     private JsonReader jsonReader;
 
@@ -73,7 +74,7 @@ public class NavigationDrawer extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -90,13 +91,14 @@ public class NavigationDrawer extends AppCompatActivity
         jsonReader = new JsonReader(getApplicationContext());
         jsonReader.execute();
 
+        /*
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (!bluetoothAdapter.isEnabled()) {
             Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
         }
-
+*/
         scoreFragment = new ScoreFragment();
     }
 
@@ -175,26 +177,31 @@ public class NavigationDrawer extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_start) {
+            toolbar.setTitle("Activité");
             StartFragment startFragment = new StartFragment();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_main, startFragment)
                     .commit();
         } else if (id == R.id.nav_historique) {
+            toolbar.setTitle("Historique");
             HistoryFragment historyFragment = new HistoryFragment();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_main, historyFragment)
                     .commit();
-        } else if (id == R.id.nav_statistique) {
+        } else if (id == R.id.nav_statistiques) {
+            toolbar.setTitle("Statistiques");
             StatisticFragment statisticFragment = new StatisticFragment();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_main, statisticFragment)
                     .commit();
         } else if (id == R.id.nav_swing) {
+            toolbar.setTitle("Analyse swing");
             AnalyseFragment analyseFragment = new AnalyseFragment();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_main, analyseFragment)
                     .commit();
         } else if (id == R.id.nav_mon_compte) {
+            toolbar.setTitle("Mon compte");
             AccountFragment accountFragment = new AccountFragment();
             bundle.putParcelable("nomsGolf",jsonReader);
             accountFragment.setArguments(bundle);
@@ -202,6 +209,7 @@ public class NavigationDrawer extends AppCompatActivity
                     .replace(R.id.content_main, accountFragment)
                     .commit();
         } else if (id == R.id.nav_appareillage) {
+            toolbar.setTitle("Appareillage");
             // Check if the BLE is available on the device
             if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
                 BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -229,6 +237,7 @@ public class NavigationDrawer extends AppCompatActivity
     public void ClickListener(String name ) {
 
         switch (name) {
+            /*
             case "play":
                 this.activityFragment = new ActivityFragment();
                 this.scoreFragment = new ScoreFragment();
@@ -239,7 +248,7 @@ public class NavigationDrawer extends AppCompatActivity
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_main, activityFragment)
                         .commit();
-                break;
+                break;*/
             case "goToHistory":
                 HistoryFragment historyFragment = new HistoryFragment();
                 fragmentManager.beginTransaction()
@@ -284,11 +293,15 @@ public class NavigationDrawer extends AppCompatActivity
                         .replace(R.id.content_main,historyScoreFragment)
                         .commit();
                 break;
-
-
-
-
-
+            case "statistiques":
+                navigationView.getMenu().performIdentifierAction(R.id.nav_statistiques,0);
+                break;
+            case "analyseSwing":
+                navigationView.getMenu().performIdentifierAction(R.id.nav_swing,0);
+                break;
+            case "historique":
+                navigationView.getMenu().performIdentifierAction(R.id.nav_historique,0);
+                break;
             default:
                 break;
 

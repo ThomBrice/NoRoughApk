@@ -1,171 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_light_background"
-    android:id="@+id/scoreFragment">
+    android:id="@+id/scoreFragment"
+    android:background="@color/colorBackground">
 
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/weatherCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="@dimen/corner_size"
+        android:layout_below="@+id/carteTrou">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextVille"
+                android:text=""
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"/>
+            <RelativeLayout
+                android:id="@+id/temperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TextVille">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+
+                    android:src="@drawable/temperature"
+                    android:id="@+id/ThermometerImage"
+                    android:layout_margin="1dp"/>
+
+                <TextView
+                    android:id="@+id/ThermometerText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ThermometerImage"
+                    android:text=""
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"/>
+            </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/wind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/temperature">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/WindImage"
+                android:src="@drawable/wind_force"
+                android:layout_margin="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/WindText"
+                android:text=""
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/WindImage"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"/>
+        </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/wind_direction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/wind">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/WindRose"
+                    android:src="@drawable/compas"
+                    android:layout_margin="1dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/TextWindRose"
+                    android:text=""
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/WindRose"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/pressure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/wind_direction">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/PressureImage"
+                    android:src="@drawable/pressure_value"
+                    android:layout_margin="1dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/TextPressure"
+                    android:text=""
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/PressureImage"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/humidity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pressure">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/AtmosphericImage"
+                    android:src="@drawable/hygrometer"
+                    android:layout_margin="1dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/TextAtmospheric"
+                    android:text=""
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/AtmosphericImage"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"/>
+            </RelativeLayout>
+
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/carteTrou"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:cardCornerRadius="@dimen/corner_size">
+        app:cardCornerRadius="@dimen/corner_size"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp">
+            android:orientation="vertical"
+            android:layout_margin="3dp">
 
-            <GridLayout
-                android:id="@+id/gridScore"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textTrou"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:columnCount="6"
-                android:rowCount="1">
+                android:text="Trou : "
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="1dp"
+                android:textStyle="bold"/>
 
-                <TextView
-                    android:id="@+id/textTrou"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Trou : "
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/numeroTrou"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:text="1"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15dp" />
-
-
-                <TextView
-                    android:id="@+id/textPar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="  Par : "
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/Par"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:text="4"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/textScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Score : "
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:text="0"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15dp" />
-            </GridLayout>
-
-            <LinearLayout
-                android:id="@+id/gridBouton"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/numeroTrou"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/gridScore"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="4">
+                android:text="1"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_toRightOf="@id/textTrou"/>
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/scoremoins"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/scoremoins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/min"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/dismiss"
+                android:layout_margin="2dp"/>
 
-                    app:backgroundTint="@color/colorPrimaryDark"
-                    app:rippleColor="@color/ripples"
-                    app:srcCompat="@android:drawable/ic_media_previous" />
+            <TextView
+                android:id="@+id/textScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Score : "
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_toLeftOf="@+id/nextHole"
+                android:layout_margin="3dp"
+                android:textStyle="bold"/>
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/nextHole"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/scorePlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus"
+                android:clickable="true"
+                android:layout_toStartOf="@+id/dismiss"
+                android:layout_below="@+id/scoremoins"
+                android:layout_margin="2dp"/>
 
-                    android:clickable="true"
-                    app:backgroundTint="@color/colorPrimaryDark"
-                    app:rippleColor="@color/ripples"
-                    android:src="@drawable/ic_golf_course_white_24dp" />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/dismiss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/cancel_hole"
+                android:layout_below="@+id/textScore"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="2dp"/>
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/scorePlus"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-
-
-                    app:backgroundTint="@color/colorPrimaryDark"
-                    app:rippleColor="@color/ripples"
-                    android:src="@android:drawable/ic_media_next"
-
-                    />
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/dismiss"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    app:backgroundTint="@color/colorPrimaryDark"
-                    app:rippleColor="@color/ripples"
-                    android:src="@android:drawable/ic_menu_close_clear_cancel" />
-
-
-            </LinearLayout>
-
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-    <include layout="@layout/fragment_weather"
-        android:id="@+id/weather">
-    </include>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/weather">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
             <TextView
                 android:id="@+id/textClub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Club : "
                 android:textColor="@color/colorPrimaryDark"
+                android:layout_alignBottom="@+id/scorePlus"
+                android:layout_alignParentStart="true"
+                android:layout_margin="1dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/textPar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Par : "
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_above="@+id/scorePlus"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="5dp"/>
+                android:layout_margin="1dp"
+                android:textStyle="bold"/>
+
             <TextView
                 android:id="@+id/club"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Fer 3"
                 android:textColor="@color/colorPrimaryDark"
-                android:layout_toRightOf="@+id/textClub"
+                android:layout_alignBaseline="@+id/textClub"
+                android:layout_alignBottom="@+id/textClub"
+                android:layout_toEndOf="@+id/textTrou" />
+
+            <TextView
+                android:id="@+id/Par"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/textPar" />
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_alignStart="@+id/textScore"
                 android:layout_centerVertical="true"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/nextHole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/next_hole"
+                android:layout_alignTop="@+id/dismiss"
+                android:layout_toStartOf="@+id/scoremoins" />
+
         </RelativeLayout>
+
+
     </android.support.v7.widget.CardView>
+
 </RelativeLayout>

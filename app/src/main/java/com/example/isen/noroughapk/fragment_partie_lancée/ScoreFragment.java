@@ -378,11 +378,11 @@ public class ScoreFragment extends Fragment {
             openWheatherMap = gson.fromJson(s, myType); // we get all the data from the URL on a Gson Filz
 
             // We set all the data we needTxtVille.setText(String.valueOf(openWheatherMap.getName()));
-            TXtWindText.setText(String.valueOf(openWheatherMap.getWind().getSpeed()) + "m/s");
-            TxtTextWindRose.setText(String.valueOf(openWheatherMap.getWind().getDeg()) + "°");
-            TxtThermometerText.setText(String.format("%.1f °C", openWheatherMap.getMainWeather().getTemp() - 273, 15));
+            TXtWindText.setText(String.valueOf(openWheatherMap.getWind().getSpeed()) + " m/s");
+            TxtTextWindRose.setText(String.valueOf(openWheatherMap.getWind().getDeg()) + " °");
+            TxtThermometerText.setText(String.format("%.1f °C", openWheatherMap.getMainWeather().getTemp() - 273, 15 + " °"));
             TxtTextPressure.setText(String.valueOf(openWheatherMap.getMainWeather().getPressure()) + " hPa");
-            TxtTextAtmospheric.setText(String.valueOf(openWheatherMap.getMainWeather().getHumidity()) + "%");
+            TxtTextAtmospheric.setText(String.valueOf(openWheatherMap.getMainWeather().getHumidity()) + " %");
             TxtVille.setText(String.valueOf(openWheatherMap.getName()));
             meteoIcon = String.valueOf(openWheatherMap.getWeather().get(0).getMain());
         }

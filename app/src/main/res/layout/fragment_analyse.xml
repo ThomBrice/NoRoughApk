@@ -1,13 +1,28 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.isen.noroughapk.AnalyseFragment">
+    tools:context="com.example.isen.noroughapk.AnalyseFragment"
+    android:background="@color/colorBackground">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="hello_analyse_fragment" />
+        android:id="@+id/text_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fragment analyse"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:padding="50px"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/text_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coming Soon!"
+        android:layout_below="@+id/text_up"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"/>
+</RelativeLayout>

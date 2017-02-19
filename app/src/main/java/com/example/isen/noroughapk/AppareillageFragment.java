@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,8 +57,8 @@ public class AppareillageFragment extends ListFragment {
     // ensure to have permission coarse location
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
-    private Button scanButton;
-    private Button stopButton;
+    private FloatingActionButton scanButton;
+    private FloatingActionButton stopButton;
     private ProgressBar progressBar;
     private Button calibrationButton;
 
@@ -75,8 +76,8 @@ public class AppareillageFragment extends ListFragment {
 
         listenerFragment=(NavigationDrawer) this.getActivity();
 
-        scanButton = (Button) view.findViewById(R.id.scan_button);
-        stopButton = (Button) view.findViewById(R.id.stop_button);
+        scanButton = (FloatingActionButton) view.findViewById(R.id.scan_button);
+        stopButton = (FloatingActionButton) view.findViewById(R.id.stop_button);
         calibrationButton = (Button) view.findViewById(R.id.calibration_button);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_appareillage);
 
