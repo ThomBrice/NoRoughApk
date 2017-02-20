@@ -49,15 +49,10 @@ public class ScoreFragment extends Fragment {
     Integer[] newScore = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     String meteoIcon;
     int lecteurHandicap = 1, scoreTotal = 0;
-
-
     TrouChangeListener TrouChangeListener;
     boolean weatherRetreive = false;
-
-
     GetWeather weatherAsync;
-
-    TextView numeroTrou, TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille, TxtClub;
+    TextView numeroTrou, TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille, TxtClub,scoreText, parText;
     OpenWheatherMap openWheatherMap;
     FloatingActionButton scorePlus;
     static double lat, lng;
@@ -116,11 +111,13 @@ public class ScoreFragment extends Fragment {
         TxtTextAtmospheric = (TextView) view.findViewById(R.id.TextAtmospheric);
         TxtVille = (TextView) view.findViewById(R.id.TextVille);
         TxtClub = (TextView) view.findViewById(R.id.club);
+        scoreText = (TextView) view.findViewById(R.id.score);
+        parText = (TextView) view.findViewById(R.id.Par);
+        numeroTrou = (TextView) view.findViewById(R.id.numeroTrou);
 
         weatherAsync = new GetWeather(TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille);
 
-        numeroTrou = (TextView) view.findViewById(R.id.numeroTrou);
-
+        parText.setText(ParGolfSart[0].toString());
         //get realm instance
         this.realm = RealmController.with(this).getRealm();
 
@@ -140,26 +137,18 @@ public class ScoreFragment extends Fragment {
     }
 
     public void changeNextHole(View view) {
-        TextView scoreTextView = (TextView) view.findViewById(R.id.score);
-        TextView parTextView = (TextView) view.findViewById(R.id.Par);
-
         int trouNumber = (Integer.parseInt(numeroTrou.getText().toString()));
         if (trouNumber < 19) {
-
-            int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
+            int scoreNumber = (Integer.parseInt(scoreText.getText().toString()));
             Score[trouNumber - 1] = scoreNumber;
             if (trouNumber == 18) {
-
                 setRealmData(Score);
                 listenerFragment.ClickListener("sharePartie",1,scoreTotal,0);
-
             } else {
-
                 int parNumber = (ParGolfSart[trouNumber]);
-
                 numeroTrou.setText("" + (trouNumber + 1));
-                scoreTextView.setText("0");
-                parTextView.setText("" + parNumber);
+                scoreText.setText("0");
+                parText.setText("" + parNumber);
             }
         }
     }
@@ -191,10 +180,8 @@ public class ScoreFragment extends Fragment {
         ArrayList<Partie> parties = new ArrayList<>();
         Partie partie = new Partie();
         setNewScore();
-
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         String golfName = sharedPref.getString("GolfPartie", "");
-
         partie.setMeteoIcon(meteoIcon);
         partie.setParcour(golfName);
         partie.setId((int) (id));
@@ -229,7 +216,6 @@ public class ScoreFragment extends Fragment {
     }
 
     public void setNewScore() {
-
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         Float TextHandicap = sharedPref.getFloat("Handicap", 54.0f);
         int handicap = Math.round(TextHandicap);
@@ -267,7 +253,6 @@ public class ScoreFragment extends Fragment {
                 }
             }
         }
-
         for (int i = 0; i < 18; i++) {
             int diff = newScore[i] - ParGolfSart[i];
             switch (diff) {
