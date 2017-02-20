@@ -85,7 +85,6 @@ public class AccountFragment extends Fragment {
         golfNameView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 listenerFragment.ClickListener("goToGetGolf");
-
             }
         });
 

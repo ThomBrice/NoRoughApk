@@ -49,7 +49,7 @@ public class ScoreFragment extends Fragment {
     Integer[] newScore = new Integer[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     String meteoIcon;
     int lecteurHandicap = 1, scoreTotal = 0;
-    TrouChangeListener TrouChangeListener;
+    TrouChangeListener trouChangeListener;
     boolean weatherRetreive = false;
     GetWeather weatherAsync;
     TextView numeroTrou, TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille, TxtClub,scoreText, parText;
@@ -66,7 +66,7 @@ public class ScoreFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_score, container, false);
 
         listenerFragment = (NavigationDrawer) this.getActivity();
-        TrouChangeListener = (NavigationDrawer) this.getActivity();
+        trouChangeListener = (NavigationDrawer) this.getActivity();
 
         FloatingActionButton nextHole = (FloatingActionButton) view.findViewById(R.id.nextHole);
         nextHole.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +149,7 @@ public class ScoreFragment extends Fragment {
                 numeroTrou.setText("" + (trouNumber + 1));
                 scoreText.setText("0");
                 parText.setText("" + parNumber);
+                trouChangeListener.TrouChangeListener(trouNumber-1);
             }
         }
     }

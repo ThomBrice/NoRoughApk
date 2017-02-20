@@ -109,7 +109,7 @@ public class NavigationDrawer extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_start, 0);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_accueil, 0);
 
         jsonReader = new JsonReader(getApplicationContext());
         jsonReader.execute();
@@ -140,9 +140,9 @@ public class NavigationDrawer extends AppCompatActivity
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Appuyez sur BACK à nouveau pour quitter", Toast.LENGTH_LONG).show();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_start,0);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_accueil,0);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -198,8 +198,8 @@ public class NavigationDrawer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_start) {
-            toolbar.setTitle("Activité");
+        if (id == R.id.nav_accueil) {
+            toolbar.setTitle("Accueil");
             StartFragment startFragment = new StartFragment();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_main, startFragment)
@@ -281,6 +281,7 @@ public class NavigationDrawer extends AppCompatActivity
             case "goToGetGolf":
                 GetGolf getGolf = new GetGolf();
                 bundle.putParcelable("jsonReader",jsonReader);
+                bundle.putParcelable("nomsGolf",jsonReader);
                 getGolf.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_main, getGolf)
@@ -395,7 +396,6 @@ public class NavigationDrawer extends AppCompatActivity
     @Override
     public void TrouChangeListener(int num){
         activityFragment.setNum(num);
-        //mapsFragment.setNum(num);
     }
 
     // set the fragment to launch if the bluetooth is enable at runtime
@@ -403,10 +403,7 @@ public class NavigationDrawer extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == -1) {
-            AppareillageFragment appareillageFragment = new AppareillageFragment();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_main, appareillageFragment)
-                    .commit();
+            navigationView.getMenu().performIdentifierAction(R.id.nav_appareillage,0);
         } else {
             Toast.makeText(getApplicationContext(),"La Bluetooth n'a pas été allumé. Veuillez réessayer.", Toast.LENGTH_LONG).show();
         }
@@ -488,5 +485,4 @@ public class NavigationDrawer extends AppCompatActivity
             }
         }
     }
-
 }
