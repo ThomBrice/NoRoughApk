@@ -1,87 +1,39 @@
 package com.example.isen.noroughapk;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
-
-import com.example.isen.noroughapk.json_helper.JsonReader;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-
-import static android.app.Activity.RESULT_OK;
-
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
-import android.util.Base64;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-
-import static android.app.Activity.RESULT_OK;
-
 /**
- * Created by Thaddée Klein on 30/11/2016.
+ * Created by Thaddée K on 30/11/2016.
  */
 
 public class AccountFragment extends Fragment {
 
     private ClickListenerFragment listenerFragment;
-
     public View view;
-
-    EditText firstName;
-    EditText surName;
-    ImageView accountPicture;
-    EditText handicap;
-    TextView golfNameView;
-
-    String golfName;
-
+    private EditText firstName;
+    private EditText surName;
+    private ImageView accountPicture;
+    private EditText handicap;
+    private TextView golfNameView;
+    private String golfName;
 
     public AccountFragment() {
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -99,14 +51,11 @@ public class AccountFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-
-
         firstName = (EditText) view.findViewById(R.id.firstname);
         surName = (EditText) view.findViewById(R.id.surname);
         handicap = (EditText) view.findViewById(R.id.handicap);
         //accountPicture = (ImageView) view.findViewById(R.id.account_picture);
         golfNameView = (TextView) view.findViewById(R.id.golfName);
-
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         String TextfirstName = sharedPref.getString("FirstName", "");
@@ -125,18 +74,15 @@ public class AccountFragment extends Fragment {
         }
         */
 
-
         if(golfName.equals("null")){}
         else{
             golfNameView.setText(golfName);
         }
-
         firstName.setText(TextfirstName);
         surName.setText(TextSurname);
         handicap.setText(TextHandicap.toString());
 
         golfNameView.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View view) {
                 listenerFragment.ClickListener("goToGetGolf");
 
@@ -154,7 +100,6 @@ public class AccountFragment extends Fragment {
         */
 
         handicap.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View view) {
                 if(Float.parseFloat(handicap.getText().toString())>54 ){
                     Toast.makeText(getActivity(), "Handicap maximum : 54", Toast.LENGTH_SHORT).show();
@@ -166,10 +111,6 @@ public class AccountFragment extends Fragment {
                 }
             }
         });
-
-
-
-
     }
 
     /* procédures nécessaire à la prise d'une photo depuis l'application
@@ -225,11 +166,9 @@ public class AccountFragment extends Fragment {
     public void onPause() {
         super.onPause();
 
-
         String FirstName = firstName.getText().toString();
         String Surname = surName.getText().toString();
         Float Handicap = Float.parseFloat(handicap.getText().toString());
-
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -237,8 +176,6 @@ public class AccountFragment extends Fragment {
         editor.putString("Surname", Surname);
         editor.putFloat("Handicap", Handicap);
         editor.commit();
-
-
     }
 
     public static String encodeToBase64(Bitmap image) {
@@ -247,7 +184,6 @@ public class AccountFragment extends Fragment {
         immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-
         return imageEncoded;
     }
 }

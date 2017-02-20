@@ -1,6 +1,5 @@
 package com.example.isen.noroughapk.fragment_partie_lancée;
 
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -38,8 +35,9 @@ import java.util.Calendar;
 
 import io.realm.Realm;
 
-import static android.R.attr.action;
-
+/**
+ * Created by Thomas B & Thaddée K on 18/01/2017.
+ */
 
 public class ScoreFragment extends Fragment {
 
@@ -60,12 +58,11 @@ public class ScoreFragment extends Fragment {
     GetWeather weatherAsync;
 
     TextView numeroTrou, TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille, TxtClub;
-    OpenWheatherMap openWheatherMap = new OpenWheatherMap();
+    OpenWheatherMap openWheatherMap;
     FloatingActionButton scorePlus;
     static double lat, lng;
 
-    public ScoreFragment() {
-    }
+    public ScoreFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,7 +108,6 @@ public class ScoreFragment extends Fragment {
             }
         });
 
-
         // edit the TextView and call the Location fonction to get the Location value and then get Weather data
         TxtThermometerText = (TextView) view.findViewById(R.id.ThermometerText);
         TXtWindText = (TextView) view.findViewById(R.id.WindText);
@@ -121,9 +117,7 @@ public class ScoreFragment extends Fragment {
         TxtVille = (TextView) view.findViewById(R.id.TextVille);
         TxtClub = (TextView) view.findViewById(R.id.club);
 
-
         weatherAsync = new GetWeather(TxtThermometerText, TXtWindText, TxtTextWindRose, TxtTextPressure, TxtTextAtmospheric, TxtVille);
-
 
         numeroTrou = (TextView) view.findViewById(R.id.numeroTrou);
 
@@ -149,7 +143,6 @@ public class ScoreFragment extends Fragment {
         TextView scoreTextView = (TextView) view.findViewById(R.id.score);
         TextView parTextView = (TextView) view.findViewById(R.id.Par);
 
-
         int trouNumber = (Integer.parseInt(numeroTrou.getText().toString()));
         if (trouNumber < 19) {
 
@@ -160,9 +153,7 @@ public class ScoreFragment extends Fragment {
                 setRealmData(Score);
                 listenerFragment.ClickListener("sharePartie",1,scoreTotal,0);
 
-
             } else {
-
 
                 int parNumber = (ParGolfSart[trouNumber]);
 
@@ -170,20 +161,13 @@ public class ScoreFragment extends Fragment {
                 scoreTextView.setText("0");
                 parTextView.setText("" + parNumber);
             }
-
         }
-
-
     }
 
     public void changeScorePlus(View view) {
-
         TextView scoreTextView = (TextView) view.findViewById(R.id.score);
-
         int scoreNumber = (Integer.parseInt(scoreTextView.getText().toString()));
-
         scoreTextView.setText("" + (scoreNumber + 1));
-
     }
 
     public void changeScoreMoins(View view) {
@@ -201,7 +185,6 @@ public class ScoreFragment extends Fragment {
     }
 
     private void setRealmData(Integer Carte[]) {
-
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String date = df.format(Calendar.getInstance().getTime());
         long id = 1 + System.currentTimeMillis();
@@ -237,16 +220,12 @@ public class ScoreFragment extends Fragment {
         partie.setScore("" + scoreTotal);
         parties.add(partie);
 
-
         for (Partie b : parties) {
             // Persist your data easily
             realm.beginTransaction();
             realm.copyToRealm(b);
             realm.commitTransaction();
-
-
         }
-
     }
 
     public void setNewScore() {
@@ -366,7 +345,6 @@ public class ScoreFragment extends Fragment {
             String urlString = params[0]; // we get the URL
             WeatherHelper http = new WeatherHelper();
             return stream = http.getHTTPData(urlString); // URL need to get the weather data
-
         }
 
         @Override
@@ -397,11 +375,8 @@ public class ScoreFragment extends Fragment {
             lat = lat / 100;
             lng = Math.round((lng * 100));
             lng = lng / 100;
-
             weatherAsync.execute(WeatherCommon.apiRequest(String.valueOf(lat), String.valueOf(lng)));
         }
-
-
     }
 
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
@@ -489,7 +464,6 @@ public class ScoreFragment extends Fragment {
                 break;
         }
     }
-
 }
 
 

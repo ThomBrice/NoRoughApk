@@ -3,7 +3,7 @@ package com.example.isen.noroughapk.Bluetooth;
 import java.util.HashMap;
 
 /**
- * Created by isen on 02/02/2017.
+ * Created by Thomas on 02/02/2017.
  */
 
 public class SampleGattAttributes {

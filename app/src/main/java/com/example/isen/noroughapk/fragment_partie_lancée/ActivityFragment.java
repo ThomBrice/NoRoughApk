@@ -117,7 +117,6 @@ public class ActivityFragment extends Fragment{
         public CharSequence getPageTitle(int position){
         return mFragmentTitleList.get(position);
         }
-
     }
 
     public void setTextStart(Double latitude,Double longitude){
@@ -155,7 +154,6 @@ public class ActivityFragment extends Fragment{
         Double[] valeurs = new Double[3];
 
         public CalculDistances() {
-
         }
 
         public CalculDistances(Double mLat, Double mLong, Double latS, Double lonS, Double latM, Double lonM, Double latE, Double lonE) {
@@ -183,9 +181,9 @@ public class ActivityFragment extends Fragment{
         @Override
         protected void onPostExecute(Double aDouble) {
             super.onPostExecute(aDouble);
-            startGreen.setText(String.format("%1$.2f", valeurs[0] + "m"));
-            midGreen.setText(String.format("%1$.2f", valeurs[1] + "m"));
-            endGreen.setText(String.format("%1$.2f", valeurs[2] + "m"));
+            startGreen.setText(String.format("%1$.0f", valeurs[0])+ " m");
+            midGreen.setText(String.format("%1$.0f", valeurs[1])+ " m");
+            endGreen.setText(String.format("%1$.0f", valeurs[2])+ " m");
         }
 
         public void Calcul() {

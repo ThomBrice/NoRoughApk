@@ -10,7 +10,6 @@ public class Weather {
     private String description;
     private String icon;
 
-
     public Weather(int id, String main, String description, String icon) {
         this.id = id;
         this.main = main;

@@ -1,28 +1,19 @@
 package com.example.isen.noroughapk.fragment_partie_lancée;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.test.espresso.core.deps.dagger.internal.DoubleCheckLazy;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.isen.noroughapk.Bluetooth.BluetoothLeService;
 import com.example.isen.noroughapk.Interfaces.LocationChangeCalcul;
@@ -30,16 +21,10 @@ import com.example.isen.noroughapk.NavigationDrawer;
 import com.example.isen.noroughapk.R;
 import com.example.isen.noroughapk.GPSTracker;
 
-import com.example.isen.noroughapk.StartFragment;
 import com.example.isen.noroughapk.json_helper.JsonReader;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -59,7 +44,6 @@ import static java.lang.Math.sqrt;
  */
 
 public class MapsFragment extends Fragment {
-    private final static String TAG = MapsFragment.class.getSimpleName();
 
     private MapView mMapView;
     private GoogleMap googleMap;
@@ -74,12 +58,6 @@ public class MapsFragment extends Fragment {
     private static Double myLong;
 
     public MapsFragment() {
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -130,8 +108,6 @@ public class MapsFragment extends Fragment {
                     googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                         @Override
                         public void onMapClick(LatLng latLng) {
-                            //calculDistances = new CalculDistances(new LatLng(gpsTracker.getLatitude(),gpsTracker.getLongitude()),latLng);
-
                             // Creating a marker
                             MarkerOptions markerOptions = new MarkerOptions();
 
@@ -152,7 +128,6 @@ public class MapsFragment extends Fragment {
 
                             // always show the title
                             marker.showInfoWindow();
-
                         }
                     });
 
@@ -270,7 +245,6 @@ public class MapsFragment extends Fragment {
         Double convertRad(Double var) {
             return (Math.PI * var) / 180;
         }
-
     }
 
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {

@@ -13,9 +13,6 @@ import com.example.isen.noroughapk.R;
 
 import java.util.ArrayList;
 
-
-
-
 public class CarteAdapter extends RecyclerView.Adapter<CarteAdapter.ViewHolder>  {
     private final NavigationDrawer activity;
     private ArrayList<String> trou;
@@ -89,7 +86,4 @@ public class CarteAdapter extends RecyclerView.Adapter<CarteAdapter.ViewHolder> 
 
         }
     }
-
-
-
 }

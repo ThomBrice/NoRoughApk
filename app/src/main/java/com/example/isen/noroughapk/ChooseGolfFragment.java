@@ -14,6 +14,9 @@ import android.widget.ListView;
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 import com.example.isen.noroughapk.json_helper.JsonReader;
 
+/**
+ * Created by Thaddée K on 22/01/2017.
+ */
 
 public class ChooseGolfFragment extends Fragment {
     public View view;
@@ -70,18 +73,10 @@ public class ChooseGolfFragment extends Fragment {
             }
         });
 
-
-
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
-
-
-
-
-
 }

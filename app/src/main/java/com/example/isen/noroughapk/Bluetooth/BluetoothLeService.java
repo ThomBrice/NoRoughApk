@@ -14,16 +14,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
-import android.util.Log;
-
 import java.util.List;
 import java.util.UUID;
 
 import static com.example.isen.noroughapk.NavigationDrawer.HM_11_CONF;
 import static com.example.isen.noroughapk.NavigationDrawer.HM_11_RX_TX;
-
 
 /**
  * Created by Thomas B on 18/01/2017.
@@ -120,9 +115,8 @@ public class BluetoothLeService extends Service {
                                  final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
 
-// For all other profiles, writes the data formatted in HEX.
+        // For all other profiles, writes the data formatted in HEX.
         final byte[] data = characteristic.getValue();
-        //Log.i(TAG, "data"+characteristic.getValue());
 
         if (data != null && data.length > 0) {
             final StringBuilder stringBuilder = new StringBuilder(data.length);
@@ -170,12 +164,10 @@ public class BluetoothLeService extends Service {
                 return false;
             }
         }
-
         mBluetoothAdapter = mBluetoothManager.getAdapter();
         if (mBluetoothAdapter == null) {
             return false;
         }
-
         return true;
     }
 

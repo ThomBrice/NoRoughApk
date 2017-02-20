@@ -1,4 +1,3 @@
-
 package com.example.isen.noroughapk;
 
 import android.content.Intent;
@@ -11,12 +10,14 @@ import android.widget.Button;
 
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
 
+/**
+ * Created by Thaddée K on 18/01/2017.
+ */
 
 public class AmisFragment extends Fragment {
     private ClickListenerFragment listenerFragment;
-    View view;
-    String textToShare="";
-
+    private View view;
+    private String textToShare="";
     boolean messageShare = false;
 
     @Override
@@ -47,15 +48,13 @@ public class AmisFragment extends Fragment {
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, textToShare);
                 startActivity(Intent.createChooser(sharingIntent, "Share text using"));
-
-
             }
         });
 
         buttonSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listenerFragment.ClickListener("goToHistory");
+                listenerFragment.ClickListener("historique");
             }
         });
         return (view);
@@ -65,7 +64,7 @@ public class AmisFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if(messageShare){
-             listenerFragment.ClickListener("goToHistory");
+             listenerFragment.ClickListener("historique");
         }
     }
 }

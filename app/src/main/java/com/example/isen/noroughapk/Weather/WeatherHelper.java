@@ -24,7 +24,7 @@ public class WeatherHelper {
             HttpURLConnection httpsURLConnection =(HttpURLConnection)url.openConnection();
             if(httpsURLConnection.getResponseCode() == 200) // OK=200;
             {
-BufferedReader r =new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream()));
+                BufferedReader r =new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream()));
                 StringBuilder sb = new StringBuilder();
                 String line;
                 while((line = r.readLine())!=null)
@@ -37,6 +37,6 @@ BufferedReader r =new BufferedReader(new InputStreamReader(httpsURLConnection.ge
         } catch (IOException e) {
             e.printStackTrace();
         }
-return stream;
+        return stream;
     }
 }

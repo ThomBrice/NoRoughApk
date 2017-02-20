@@ -27,7 +27,8 @@
                 android:text=""
                 android:layout_centerHorizontal="true"
                 android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp"/>
             <RelativeLayout
                 android:id="@+id/temperature"
                 android:layout_width="match_parent"
@@ -173,7 +174,8 @@
                 android:text="Trou : "
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_margin="1dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/numeroTrou"
@@ -181,7 +183,8 @@
                 android:layout_height="wrap_content"
                 android:text="1"
                 android:textColor="@color/colorPrimaryDark"
-                android:layout_toRightOf="@id/textTrou"/>
+                android:layout_toRightOf="@id/textTrou"
+                android:textSize="20dp"/>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/scoremoins"
@@ -200,17 +203,8 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_toLeftOf="@+id/nextHole"
                 android:layout_margin="3dp"
-                android:textStyle="bold"/>
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/scorePlus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/plus"
-                android:clickable="true"
-                android:layout_toStartOf="@+id/dismiss"
-                android:layout_below="@+id/scoremoins"
-                android:layout_margin="2dp"/>
+                android:textStyle="bold"
+                android:textSize="20dp"/>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/dismiss"
@@ -232,7 +226,8 @@
                 android:layout_alignBottom="@+id/scorePlus"
                 android:layout_alignParentStart="true"
                 android:layout_margin="1dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/textPar"
@@ -244,26 +239,29 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="1dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/club"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fer 3"
+                android:text=""
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_alignBaseline="@+id/textClub"
                 android:layout_alignBottom="@+id/textClub"
-                android:layout_toEndOf="@+id/textTrou" />
+                android:layout_toEndOf="@+id/textTrou"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/Par"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4"
+                android:text=""
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/textPar" />
+                android:layout_toRightOf="@+id/textPar"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/score"
@@ -274,7 +272,19 @@
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
                 android:layout_alignStart="@+id/textScore"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:textSize="20dp"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/scorePlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus"
+                android:clickable="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_below="@+id/scoremoins"
+                android:layout_alignStart="@+id/scoremoins" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/nextHole"
@@ -283,7 +293,8 @@
                 android:clickable="true"
                 android:src="@drawable/next_hole"
                 android:layout_alignTop="@+id/dismiss"
-                android:layout_toStartOf="@+id/scoremoins" />
+                android:layout_toStartOf="@+id/scorePlus"
+                android:layout_centerVertical="true"/>
 
         </RelativeLayout>
 

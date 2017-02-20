@@ -1,6 +1,5 @@
 package com.example.isen.noroughapk.BDD.realm;
 
-
 import android.app.Activity;
 import android.app.Application;
 

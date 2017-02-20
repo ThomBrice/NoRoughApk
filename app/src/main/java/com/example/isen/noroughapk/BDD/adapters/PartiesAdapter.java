@@ -20,7 +20,6 @@ import com.example.isen.noroughapk.R;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-
 public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
     final Context context;
     private Realm realm;
@@ -31,7 +30,6 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
 
         this.context = context;
     }
-
 
     // create new views (invoked by the layout manager)
     @Override
@@ -46,7 +44,6 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
         realm = RealmController.getInstance().getRealm();
         // get the article
-
 
         final Partie partie = getItem(position);
         // cast the generic view holder to our specific one
@@ -84,7 +81,6 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
             default:
                 holder.MeteoIcone.setImageResource(R.drawable.build);
         }
-
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +145,6 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
         return 0;
     }
 
-
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         public CardView card;
         public TextView textDatePartie;
@@ -165,10 +160,6 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
             textScore =(TextView) itemView.findViewById(R.id.scoreTotal);
             GolfIcone =(ImageView) itemView.findViewById(R.id.GolfIcone);
             MeteoIcone = (ImageView) itemView.findViewById(R.id.meteoIcone);
-
-
-
-
         }
     }
 
@@ -189,16 +180,11 @@ public class PartiesAdapter extends RealmRecyclerViewAdapter<Partie> {
     public int GetIntMeteo(String meteoIcon){
         int IntMeteo=0;
 
-        if (meteoIcon.equals("Clouds")){
+        if (meteoIcon.equals("Clouds"))
             IntMeteo=1;
-        }
 
-        if(meteoIcon.equals("Suns")){
+        if(meteoIcon.equals("Suns"))
             IntMeteo=2;
-        }
-
         return IntMeteo;
     }
-
-
 }

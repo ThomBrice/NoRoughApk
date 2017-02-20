@@ -5,9 +5,9 @@
     <color name="colorAccent">#ffffff</color>
     <color name="ripples">#e4e4e4</color>
     <color name="colorBackground">#d5d9d6</color>
-    <color name="start_gradient">#4CAF50</color>
+    <color name="start_gradient">#54bc58</color>
     <color name="mid_gradient">#009688</color>
-    <color name="end_gradient">#4CAF50</color>
+    <color name="end_gradient">#067c0b</color>
     <color name="circle_map">#9b000000</color>
     <color name="logo">#388E3C</color>
 </resources>

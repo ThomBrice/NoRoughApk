@@ -20,7 +20,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 
 import com.example.isen.noroughapk.Bluetooth.BluetoothLeService;
 import com.example.isen.noroughapk.Interfaces.ClickListenerFragment;
@@ -50,13 +48,10 @@ public class AppareillageFragment extends ListFragment {
     private ScanCallback scanCallback;
     private BluetoothAdapter.LeScanCallback mLeScanCallback;
     private ClickListenerFragment listenerFragment;
-
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
-
     // ensure to have permission coarse location
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
-
     private FloatingActionButton scanButton;
     private FloatingActionButton stopButton;
     private ProgressBar progressBar;
@@ -66,16 +61,10 @@ public class AppareillageFragment extends ListFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_appareillage, container, false);
 
         listenerFragment=(NavigationDrawer) this.getActivity();
-
         scanButton = (FloatingActionButton) view.findViewById(R.id.scan_button);
         stopButton = (FloatingActionButton) view.findViewById(R.id.stop_button);
         calibrationButton = (Button) view.findViewById(R.id.calibration_button);
@@ -119,7 +108,6 @@ public class AppareillageFragment extends ListFragment {
             scanCallback = new ScanCallback() {
                 @Override
                 public void onScanResult(int callbackType, final ScanResult result) {
-
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -128,7 +116,6 @@ public class AppareillageFragment extends ListFragment {
                                 bleDeviceListAdapter.notifyDataSetChanged();
                             }
                         });
-
                 }
             };
         else

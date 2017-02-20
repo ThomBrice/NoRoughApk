@@ -1,10 +1,7 @@
 package com.example.isen.noroughapk;
 
-import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -23,10 +20,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.isen.noroughapk.Bluetooth.BluetoothLeService;
@@ -44,8 +39,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import static android.bluetooth.BluetoothGattCharacteristic.PERMISSION_READ;
-import static android.bluetooth.BluetoothGattCharacteristic.PROPERTY_NOTIFY;
 import static com.example.isen.noroughapk.Bluetooth.BluetoothLeService.ACTION_DATA_VERIFIED;
 
 /**
@@ -66,8 +59,38 @@ public class NavigationDrawer extends AppCompatActivity
     private boolean doubleBackToExitPressedOnce = false;
     private static int PARTY_LAUNCH = 0;
     private Toolbar toolbar;
-
+    private GPSTracker gpsTracker;
     private JsonReader jsonReader;
+    private String mDeviceName;
+    private String mDeviceAddress;
+    private String data;
+    private BluetoothLeService mBluetoothLeService;
+    private boolean mConnected = false;
+    private BluetoothGattCharacteristic characteristicTX;
+    private BluetoothGattCharacteristic characteristicRX;
+
+    private final String LIST_NAME = "NAME";
+    private final String LIST_UUID = "UUID";
+
+    public final static UUID HM_11_RX_TX = UUID.fromString(SampleGattAttributes.HM_11_RX_TX);
+    public final static UUID HM_11_CONF = UUID.fromString(SampleGattAttributes.HM_11_CONF);
+
+    //Management of the Bluetooth Service lifecycle.
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
+            if (!mBluetoothLeService.initialize())
+                finish();
+            // Automatically connects to the device upon successful start-up initialization
+            mBluetoothLeService.connect(mDeviceAddress);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mBluetoothLeService = null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,16 +113,13 @@ public class NavigationDrawer extends AppCompatActivity
 
         jsonReader = new JsonReader(getApplicationContext());
         jsonReader.execute();
-
-        /*
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if (!bluetoothAdapter.isEnabled()) {
-            Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
-        }
-*/
         scoreFragment = new ScoreFragment();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(mGattUpdateReceiver);
     }
 
     @Override
@@ -110,6 +130,7 @@ public class NavigationDrawer extends AppCompatActivity
             final boolean result = mBluetoothLeService.connect(mDeviceAddress);
         }
     }
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -128,7 +149,7 @@ public class NavigationDrawer extends AppCompatActivity
             public void run() {
                 doubleBackToExitPressedOnce=false;
             }
-        }, 2000); //wait 2 seconds
+        }, 1500); //wait 1.5 seconds
     }
 
     @Override
@@ -140,6 +161,7 @@ public class NavigationDrawer extends AppCompatActivity
         mBluetoothLeService.disconnect();
         unbindService(mServiceConnection);
         mBluetoothLeService = null;
+        gpsTracker.stopUsingGPS();
     }
 
     @Override
@@ -237,7 +259,6 @@ public class NavigationDrawer extends AppCompatActivity
     public void ClickListener(String name ) {
 
         switch (name) {
-            /*
             case "play":
                 this.activityFragment = new ActivityFragment();
                 this.scoreFragment = new ScoreFragment();
@@ -247,12 +268,6 @@ public class NavigationDrawer extends AppCompatActivity
                 mapsFragment.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_main, activityFragment)
-                        .commit();
-                break;*/
-            case "goToHistory":
-                HistoryFragment historyFragment = new HistoryFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_main, historyFragment)
                         .commit();
                 break;
 
@@ -397,51 +412,6 @@ public class NavigationDrawer extends AppCompatActivity
         }
     }
 
-
-
-
-
-    // Début de la connection au Bluetooth
-
-    public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
-    public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
-
-    private String mDeviceName;
-    private String mDeviceAddress;
-    private String data;
-    private BluetoothGatt mBluetoothGatt;
-    private BluetoothLeService mBluetoothLeService;
-    private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics =
-            new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
-    private boolean mConnected = false;
-    private BluetoothGattCharacteristic mNotifyCharacteristic;
-    private BluetoothGattCharacteristic characteristicTX;
-    private BluetoothGattCharacteristic characteristicRX;
-
-    private final String LIST_NAME = "NAME";
-    private final String LIST_UUID = "UUID";
-
-    public final static UUID HM_11_RX_TX = UUID.fromString(SampleGattAttributes.HM_11_RX_TX);
-    public final static UUID HM_11_CONF = UUID.fromString(SampleGattAttributes.HM_11_CONF);
-
-
-    //Management of the Service lifecycle.
-    private final ServiceConnection mServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-            if (!mBluetoothLeService.initialize())
-                finish();
-            // Automatically connects to the device upon successful start-up initialization
-            mBluetoothLeService.connect(mDeviceAddress);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mBluetoothLeService = null;
-        }
-    };
-
     // Handles various events fired by the Service.
     // ACTION_GATT_CONNECTED: connected to a GATT server.
     // ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
@@ -471,12 +441,6 @@ public class NavigationDrawer extends AppCompatActivity
             }
         }
     };
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        unregisterReceiver(mGattUpdateReceiver);
-    }
 
     private void updateConnectionState(final int resourceId) {
         runOnUiThread(new Runnable() {

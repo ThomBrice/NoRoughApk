@@ -1,13 +1,9 @@
 package com.example.isen.noroughapk.json_helper;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.Toast;
-
-import com.example.isen.noroughapk.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,8 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by Thomas B on 29/11/2016.
@@ -123,11 +117,7 @@ public class JsonReader extends AsyncTask<Void, Integer, Void> implements Parcel
                     // adding contact to contact list
                     coordonneesList.add(coordonnees);
                 }
-                }
-
-
-
-
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;

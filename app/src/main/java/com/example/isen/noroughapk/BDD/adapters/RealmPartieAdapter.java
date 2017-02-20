@@ -1,10 +1,9 @@
 package com.example.isen.noroughapk.BDD.adapters;
 
 import android.content.Context;
+import io.realm.RealmResults;
 
 import com.example.isen.noroughapk.BDD.model.Partie;
-
-import io.realm.RealmResults;
 
 /**
  * Created by Thaddée on 09/11/2016.
